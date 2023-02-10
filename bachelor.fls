@@ -1,6 +1,6 @@
-PWD c:\Users\Matej\Documents\Škola\UPOL\BP\workspace
+PWD c:\Users\Matej\Documents\Škola\UPOL\BP\bachelor_thesis
 INPUT C:\Users\Matej\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\Matej\Documents\Škola\UPOL\BP\workspace\bachelor.tex
+INPUT c:\Users\Matej\Documents\Škola\UPOL\BP\bachelor_thesis\bachelor.tex
 OUTPUT bachelor.log
 INPUT C:\Users\Matej\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\Matej\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
