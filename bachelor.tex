@@ -433,14 +433,14 @@
             Alice pošle Bobovi velké prvočíslo $p$ a generátor $g$.
             Domluvit se můžou i nezabezpečenou komunikací přes síť. Nevadí nám, že Eva $p$ a $g$ zachytí.
         \item
-            Alice náhodně vybere velké číslo $\alpha \in \mathbb{N}$, vypočítá $A=g^\alpha \mod{p}$ a $A$ pošle po síti Bobovi.
+            Alice náhodně vybere (velké) číslo $\alpha \in \mathbb{N}$, vypočítá $A=g^\alpha \mod{p}$ a $A$ pošle po síti Bobovi.
         \item
-            Bob náhodně vybere velké číslo $\beta \in \mathbb{N}$, vypočítá $B=g^\beta \mod{p}$ a $B$ pošle po síti Alici.
+            Bob náhodně vybere (velké) číslo $\beta \in \mathbb{N}$, vypočítá $B=g^\beta \mod{p}$ a $B$ pošle po síti Alici.
         \item
             Alice vypočítá $k=B^\alpha \mod{p}$.
         \item
             Bob vypočítá $k=A^\beta \mod{p}$.
-            
+
     \end{enumerate}
 
     Všimněme si, že $B^\alpha \equiv g^{\beta \alpha} \pmod{p}$ a $A^\beta \equiv g^{\alpha \beta} \pmod{p}$. Z vlastnosti násobení
@@ -467,15 +467,52 @@
 
         \bigskip
 
-        Ukažme si, jak by Mallory mohl komunikaci mezi Alicí a Bobem napadnout:
+        Ukažme si, jak by Mallory mohl komunikaci mezi Alicí a Bobem jednoduše napadnout:
 
             % problém měnění zpráv (obejití DH protokolu)
-            [todo posloupnost]
-            \begin{enumerate}
-                \item
-                    Alice pošle Mallorymu klíč
 
-            \end{enumerate}
+            \begin{itemize}
+                \item
+                    Alice pošle Bobovi velké prvočíslo $p$ a generátor $g$.
+                    Mallory tyto hodnoty zachytí a zapamatuje si je.
+                \item
+                    Alice náhodně vybere (velké) číslo $\alpha \in \mathbb{N}$, vypočítá $A=g^\alpha \mod{p}$ a $A$ pošle po síti Bobovi.
+                \item
+                    Mallory zprávu $A$ zachytí a nepošle ji dále Bobovi. Místo toho vybere velké číslo $\gamma \in \mathbb{N}$,
+                    vypočítá $C=g^\gamma \mod{p}$ a $C$ pošle po síti Bobovi.
+                \item
+                    Bob náhodně vybere (velké) číslo $\beta \in \mathbb{N}$, vypočítá $B=g^\beta \mod{p}$ a $B$ pošle po síti Alici.
+                \item
+                    Mallory zprávu $B$ zachytí a nepošle ji Alici. Místo toho Alici pošle $C$.
+                \item
+                    Alice vypočítá $k_1=C^\alpha \mod{p}$. Bob vypočítá $k_2=C^\beta \mod{p}$.
+                \item
+                    Mallory vypočítá $k_1=A^\gamma \mod{p}$ a $k_2=B^\gamma \mod{p}$.
+
+            \end{itemize}
+
+            % todo [obrázek]
+
+
+            Alice a Bob si nyní můžou myslet, že se dohodli na společném klíči, pomocí kterého povedou zabezpečenou komunikaci.
+            Ve skutečnosti bude ale jejich veškerou komunikaci číst (případně měnit) Mallory, aniž by o tom Alice s Bobem věděli.
+            Ukažme si to na příkladu komunikace, která probíhá po výše zmíněné výměně klíče.
+
+            Alice pomocí $k_1$ zašifruje zprávu $m$ a pošle $c$ po síti Bobovi. Mallory $c$ zachytí a pomocí $k_1$ ji dešifruje.
+            Zprávu $m$ si nyní může přečíst a kompletně změnit její obsah.
+            Upravenou zprávu $m'$ zašifruje pomocí $k_2$ a $c'$ pošle Bobovi.\footnote{Pokud Mallory zprávy pouze čte, potom zřejmě $m = m'$.}
+            Bob zprávu $c'$ dešifruje pomocí $k_2$.
+
+            Problém je jistě v autentifikaci zpráv. Alice ani Bob nemají možnost zjistit, že byla zpráva někým upravena.
+            Bob nemá nikdy jistotu, že obdrženou zprávu poslala opravdu Alice (a naopak).
+
+            \medskip
+
+            Šifrovací metody, které autentifikaci zajišťují, představíme v části~\ref{public-key}.
+
+    
+
+
     
 
 \section{Problém diskrétního logaritmu}\label{sec:discrete-logarithm}

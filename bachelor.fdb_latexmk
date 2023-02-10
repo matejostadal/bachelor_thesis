@@ -1,10 +1,10 @@
 # Fdb version 3
-["biber bachelor"] 1675978738 "bachelor.bcf" "bachelor.bbl" "bachelor" 1676034649
-  "bachelor.bcf" 1676034648 106835 e669fcc16d0c48e147fdbb3db8c27028 "pdflatex"
+["biber bachelor"] 1676042465 "bachelor.bcf" "bachelor.bbl" "bachelor" 1676043247
+  "bachelor.bcf" 1676043245 106835 e669fcc16d0c48e147fdbb3db8c27028 "pdflatex"
   (generated)
   "bachelor.bbl"
   "bachelor.blg"
-["pdflatex"] 1676034645 "c:/Users/Matej/Documents/Škola/UPOL/BP/bachelor_thesis/bachelor.tex" "bachelor.pdf" "bachelor" 1676034649
+["pdflatex"] 1676043242 "c:/Users/Matej/Documents/Škola/UPOL/BP/bachelor_thesis/bachelor.tex" "bachelor.pdf" "bachelor" 1676043247
   "C:/Users/Matej/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1675871560 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/Matej/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbi1200.pk" 1674900064 42728 ac85a224a58101d20c1e514e247c531c ""
   "C:/Users/Matej/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1200.pk" 1674899238 31952 7b2fd0e1acae88ac1c7351c9c8d6e2d7 ""
@@ -63,6 +63,7 @@
   "C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1247593067 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1247593067 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1247593067 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1247593066 32716 08e384dc442464e7285e891af9f45947 ""
   "C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1247593067 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1247593073 34694 870c211f62cb72718a00e353f14f254d ""
   "C:/Users/Matej/AppData/Local/Programs/MiKTeX/tex/generic/atbegshi/atbegshi.sty" 1575571100 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
@@ -123,12 +124,12 @@
   "C:/Users/Matej/AppData/Local/Programs/MiKTeX/tex/latex/refcount/refcount.sty" 1576433952 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
   "C:/Users/Matej/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1657797096 9714 ba3194bd52c8499b3f1e3eb91d409670 ""
   "C:/Users/Matej/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "bachelor.aux" 1676034648 2705 260d609f82ba1476b3568d6f50fb70e0 "pdflatex"
-  "bachelor.bbl" 1675978758 486 ee04f40f768daeed26442158e95aba61 "biber bachelor"
-  "bachelor.out" 1676034648 2229 8eb6d1a264051182d29345448ef0e639 "pdflatex"
-  "bachelor.run.xml" 1676034648 2329 72efd3c8ed9f5d19cba051fa1a61fae5 "pdflatex"
-  "bachelor.tex" 1676034643 24915 c3645be38ad3e097aad3ad6cf059fc36 ""
-  "c:/Users/Matej/Documents/Škola/UPOL/BP/bachelor_thesis/bachelor.tex" 1676034643 24915 c3645be38ad3e097aad3ad6cf059fc36 ""
+  "bachelor.aux" 1676043245 2705 87deb4d171ac447d33e460ab53ab8774 "pdflatex"
+  "bachelor.bbl" 1676042476 486 ee04f40f768daeed26442158e95aba61 "biber bachelor"
+  "bachelor.out" 1676043245 2229 8eb6d1a264051182d29345448ef0e639 "pdflatex"
+  "bachelor.run.xml" 1676043245 2329 72efd3c8ed9f5d19cba051fa1a61fae5 "pdflatex"
+  "bachelor.tex" 1676043245 27170 d5476a7c2f8d11692f0d4db4ff94a9b6 ""
+  "c:/Users/Matej/Documents/Škola/UPOL/BP/bachelor_thesis/bachelor.tex" 1676043245 27170 d5476a7c2f8d11692f0d4db4ff94a9b6 ""
   (generated)
   "bachelor.aux"
   "bachelor.bcf"
