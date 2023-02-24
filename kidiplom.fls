@@ -1,6 +1,6 @@
-PWD c:\Users\Matej\Documents\Škola\UPOL\BP\final
+PWD c:\Users\Matej\Documents\Škola\UPOL\BP\bachelor_thesis
 INPUT C:\Users\Matej\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\Matej\Documents\Škola\UPOL\BP\final\kidiplom.tex
+INPUT c:\Users\Matej\Documents\Škola\UPOL\BP\bachelor_thesis\kidiplom.tex
 OUTPUT kidiplom.log
 INPUT .\kidiplom.cls
 INPUT .\kidiplom.cls

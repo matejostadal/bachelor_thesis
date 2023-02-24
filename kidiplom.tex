@@ -481,8 +481,6 @@
 
     \subsection{Protokol D-H}
 
-        % todo q dělí p-1 atd.. z graduate course
-
         Alice a Bob se nejprve musí domluvit na velkém prvočísle $p$ (to bude určovat potřebnou konečnou doménu).
 
         Pro funkčnost protokolu potřebujeme, aby Alice i Bob znali generátor $g$ grupy $\mathbb{Z}^*_p$ (viz~\ref{def:Z*p}).
@@ -507,13 +505,15 @@
         plyne, že $g^{\beta \alpha} = g^{\alpha \beta}$. Z tohoto vyplývá, že Alice a Bob nezávisle na sobě získají stejný klíč $k$.
 
 
-    \subsection{Bezpečnost D-H výměny klíčů}\label{subsec:diffie-hellman-safety}
+    \subsection{Bezpečnost D-H výměny klíčů}\label{subsec:diffie-hellman-security}
 
         Celou komunikaci na síti poslouchá Eva. Z návrhu našeho protokolu víme, že Eva zachytila $p, A$ (tedy $g^\alpha$) a $B$ (tedy $g^\beta$).
         Navíc zná generátor $g$.
         Jestliže chce Eva šifrované zprávy dešifrovat, musí získat $k$.
         Musí tedy zjistit $g^{\alpha \beta}$ z $g, g^\alpha, g^\beta$ (aniž by znala $\alpha$ nebo $\beta$).
         Tomuto problému budeme říkat \emph{Diffieho-Hellmanův problém} (zkráceně DHP).
+
+        % [todo zadefinovat DHP a souvislost DLP nechat na později?]
 
         Platí, že Eva je schopna vyřešit DHP, pokud umí vyřešit tzv. \emph{problém diskrétního logaritmu}.
         Ikdyž opačná implikace zatím nebyla dokázána, panuje shoda, že oba zmíněné problémy jsou ekvivalentní.
@@ -527,30 +527,49 @@
     % todo delitele p (p-1 musí mít dělitele velké liché prime)
     % velikost p
 
-        V podkapitole~\ref{subsec:diffie-hellman-safety} jsme představili problém DHP.
+        V podkapitole~\ref{subsec:diffie-hellman-security} jsme představili problém DHP.
         Úkolem bylo zjistit $g^{\alpha \beta}$ z $g, g^\alpha, g^\beta$ bez znalosti $\alpha$ a $\beta$.
 
         Pokud bychom byli schopni z $g^\alpha$ efektivně získat $\alpha$ (případně z $g^\beta$ získat $\beta$), uměli bychom také
         efektivně řešit DHP.
 
-        \newpage
 
         \begin{definition}
             Problém diskrétního logaritmu (DLP)
             
-            Nechť $\mathbb{G}$ je cyklická grupa [prvočíselného] řádu $q$, $g$ její generátor a $x$ libovolný prvek z $\mathbb{G}$.
+            Nechť $\mathbb{G}$ je cyklická grupa řádu $n$, $g$ její generátor a $x$ libovolný prvek z $\mathbb{G}$.
 
-            Přirozené číslo $e$ takové, že
+            Přirozené číslo $e \in \mathbb{Z}_n$ takové, že
                 \begin{center}
-                    $g^e \equiv x \pmod{q}$
+                    $g^e \equiv x \pmod{n}$
                 \end{center}
             
             nazveme diskrétním logaritmem o základu $g$ z $x$.
 
-            Problém nalezení minimálního diskrétního logaritmu o základu $g$ z $x$ nazveme \textbf{problém diskrétního logaritmu}.
+            Problému nalezení diskrétního logaritmu o základu $g$ z $x$ budeme nazývat \textbf{problém diskrétního logaritmu}.
 
         \end{definition}
 
+        There are a number of candidate group families G where the discrete logarithm function is believed
+        to be hard to compute. For example, when p and q are sufficiently large, suitably chosen primes,
+        the discrete logarithm function in the order q subgroup of Z*p is believed to be hard to compute
+        (p should be at least 2048-bits, and q should be at least 256-bits).
+        
+        Existuje řada grup $\mathbb{G}$, u nichž předpokládáme, že je v nich problém diskrétního logaritmu obtížně řešitelný.
+        Na tomto předpokladu stojí bezpečnost řady šifrovacích protokolů, včetně Diffieho-Hellmanovy výměny klíčů
+        (jak jsme uvedli v sekci~\ref{subsec:diffie-hellman-security})
+
+        % attack game 10.4 A Graduate Course - 407
+
+        \begin{definition}
+            (Předpoklad diskrétního logaritmu)
+            
+            Budeme říkat, že předpoklad diskrétního logaritmu platí pro cyklickou grupu $\mathbb{G}$, právě tehdy když
+            pravděpodobnost nalezení diskrétního logaritmu je zanedbatelná. 
+
+        \end{definition}
+
+        % Graduate Course... 409, 684
 
         [promyslet q, prvočíselnost cyklické grupy a konkretizaci D-H]
 
@@ -615,6 +634,7 @@
 
     
 \part{Asymetrické šifrování}\label{public-key}
+
 
 
 \end{document}
