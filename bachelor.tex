@@ -5,8 +5,6 @@
 \usepackage{hyperref}
 
 \usepackage{biblatex}
-\addbibresource{sample.bib}
-
 
 \newtheorem{definition}{Definice}[section]
 \newtheorem{theorem}{Věta}[section]
@@ -14,6 +12,9 @@
 \begin{document}
 
 \part{Úvod}\label{introduction}
+
+    % todo inspirace A Graduate Course (projít shodu a parafrázovat)
+
     V celé práci budeme hledat různá řešení následujícího problému:
 
     \medskip
@@ -25,7 +26,7 @@
     Jména nám pomáhají udržet přehlednější a jednodušší výklad.}
 
     Velmi zjednodušeně můžeme popsat poslání zprávy Alice Bobovi takto:
-    Alice upraví zprávu $m$ (upravenou zprávu označíme $c$)\footnote{Použití písmena $m$ a $c$ plyne z angl. slov \emph{message} a \emph{ciphered}.}
+    Alice upraví zprávu $m$ (upravenou zprávu označíme $c$)\footnote{Použití písmena $m$ a $c$ plyne z angl. slov \emph{message} a \emph{cipher}.}
     a pošle ji sítí Bobovi.
     Bob přijme $c$, upraví ji do původní podoby $m$ a poté si ji přečte.
     Alice s Bobem využívají toho, že Eva neví jakým způsobem byla $m$ upravena na $c$, a tudíž nemá jak získat $m$.
@@ -39,8 +40,8 @@
     \begin{itemize}
         \item
             Eva není schopna modifikovat zachycenou zprávu.
-            Bob tedy nebude muset kontrolovat, zda zprávu opravdu poslala Alice, a naopak.
-            (tohoto předpokladu se zbavíme v kapitole~\ref{public-key})
+            Bob tedy nebude muset kontrolovat, zda zprávu opravdu poslala Alice, a naopak
+            (tohoto předpokladu se zbavíme v kapitole~\ref{public-key}).
         \item
             Alice i Bob mají možnost si zprávu přečíst v bezpečném prostředí.
     \end{itemize}
@@ -67,14 +68,15 @@
             Jako výstup vrací zašifrovaný text $c$.
 
             \begin{center}
-                $E: \mathcal{K} \times \mathcal{M} \rightarrow \mathcal{C}$
+                $E: \mathcal{K} \times \mathcal{M} \rightarrow \mathcal{C}$,
             \end{center}
 
-            Kde $\mathcal{K}$ je množina klíčů, $\mathcal{M}$ je množina zpráv a 
+            kde $\mathcal{K}$ je množina klíčů, $\mathcal{M}$ je množina zpráv a 
             $\mathcal{C}$ je množina šifrovaných zpráv.
 
         \item
-            $D$ je funkce dešifrování (D z ang. \emph{decryption}).
+            $D$ je funkce dešifrování (D z ang. \emph{decryption}). $D$ přijímá na vstupu klíč $k$ a zašifrovaný text $c$.
+            Jako výstup vrací dešifrovanou zprávu $m$.
             
             \begin{center}
                 $D: \mathcal{K} \times \mathcal{C} \rightarrow \mathcal{M}$
@@ -166,7 +168,7 @@
     jejich spojením vznikne zašifrovaná zpráva $c$.
     
     \bigskip
-    Na okraj ještě uveďme, že se u klíčů můžeme omezit na podmnožinu přirozených čísel a pracovat pouze s
+    Na okraj ještě uveďme, že se u klíčů můžeme omezit na podmnožinu nezápormých celých čísel a pracovat pouze s
     $\mathcal{K} =\{n \in \mathbb{N}_0 \mid n < |\Sigma|\}$
     bez újmy na obecnosti. Je zřejmé, že například pro množinu symbolů velikosti 2 by každý lichý klíč prohodil
     každý symbol na opačný a každý sudý klíč by nechal $m$ beze změny. Mohli bychom se tedy omezit pouze na $k \in \{0,1\}$
@@ -196,7 +198,7 @@
         Obecně tedy k prolomení\footnote{Intuitivně chápeme jako proces, díky kterému bude Eva schopna získat dešifrované zprávy.}
         Caesarovy šifry stačí čas $O(|\Sigma|)$.\footnote{Tímto myslíme časovou složitost v nejhorším případě.
         Eva samozřejmě může v (pro ni) nejlepším případě klíč uhádnout hned na první pokus. Tomu samozřejmě nezabráníme žádnou šifrou.
-        Můžeme pouze počtem klíčů snížit pravděpodobnost, že se to stane.}
+        Můžeme včak vysokým počtem klíčů výrazně snížit pravděpodobnost, že se to stane.}
 
         K prolomení Caesarovy šifry lze také použít tzv. frekvenční analýzu, která umožňuje některé
         symboly odhadnout na základě jejich statistického výskytu v přirozeném jazyce.
@@ -212,17 +214,17 @@
     Oproti Caesarově šifře tedy nemusí být shodné symboly posunuty vždy o stejný počet míst.
 
     Vernamova šifra $\mathcal{E}$ je definována nad $(\{0, 1, \ldots, |\Sigma|-1\}^L, \Sigma^L, \Sigma^L)$ pro zvolenou délku $L$.
-    Klíč je tedy L-tice čísel, kde člen na pozici i určuje počet míst v abecedě, o které posuneme znak zprávy na pozici i.
+    Klíč je tedy L-tice čísel, kde člen na pozici $i$ určuje počet míst v abecedě, o které posuneme znak zprávy na pozici $i$.
 
     \medskip
 
     Operace zašifrování a dešifrování jsou tedy definovány následovně:
-    (Předpokládejme, že $m_i = a_r$ a $c_j = a_s$)
+    (předpokládejme, že $m_i = a_r$ a $c_j = a_s$)
 
     \begin{center}
-        $E(k_i, m_i) = a_l$, kde a $l = (r+k_i)\mod{|\Sigma|}$
+        $E(k_i, m_i) = a_l$, kde $l = (r+k_i)\mod{|\Sigma|}$
 
-        $D(k_j, c_j) = a_m$, kde $m = (s-k_j)\mod{|\Sigma|}$
+        $D(k_j, c_j) = a_m$, kde $m = (s-k_j)\mod{|\Sigma|}$.
     \end{center}
 
     Obdobně jako u Caesarovy šifry bude zašifrování celé zprávy probíhat tak, že podle klíče $k$ zašifrujeme všechny znaky $m$ jednotlivě na nové a
@@ -231,7 +233,7 @@
     \bigskip
 
     Existuje i binární varianta Vernamovy šifry, ve které jsou odesílané zprávy pouze sekvence bitů.
-    Binární je definována nad $(\{0,1\}^L, \{0,1\}^L, \{0,1\}^L)$.
+    Binární varianta je definována nad $(\{0,1\}^L, \{0,1\}^L, \{0,1\}^L)$.
     Fakt, že zprávy jsou sekvence bitů nás nijak neomezuje. Víme, že v praxi jsou všechny zprávy na nějaké úrovni
     reprezentovány sekvencí jedniček a nul.
 
@@ -345,11 +347,22 @@
     % dusledky pro Zp
     % cyklicka grupa
     % multiplikativni grupa (grupa Zmod n vyhledem k nasobeni)
+    % Lagrangova věta
 
-    $\mathbb{F}^*_p = \mathbb{Z}/p\mathbb{Z}$ $(2 \leq g \leq  p-2)$
+    % $\mathbb{F}^*_p = \mathbb{Z}/p\mathbb{Z}$ $(2 \leq g \leq  p-2)$
     % faktorova grupa
 
     % zdroj A Graduate Course... úplně nakonci Appendix A
+
+    \begin{definition}\label{def:Z*p}
+        Multiplikativní grupu nenulových zbytkových tříd modulo $p$ budeme značit $\mathbb{Z}^*_p$. [definice -> dohoda]
+    \end{definition}
+
+    \begin{definition}
+        Pro libovolné prvočíslo $p$ je $\mathbb{Z}^*_p$ cyklická.
+    \end{definition}
+
+
 
 
 \section{Diffieho-Hellmanova výměna klíčů}\label{sec:diffie-hellman}
@@ -360,14 +373,14 @@
     % todo analogie s mícháním barev
 
     V úvodu k symetrickému šifrování jsme zmínili, že výměna (respektive domluva)
-    tajného klíče $k$ mezi Alicí a Bobem tak, aby jej nezískala Eva není jednoduchý úkol.
+    tajného klíče $k$ mezi Alicí a Bobem tak, aby jej nezískala Eva, není jednoduchý úkol.
 
     S pomocí některých znalostí, které jsme uvedli v sekci~\ref{sec:modular-arithmetic}, zmíníme protokol, pomocí kterého
     to bude možné.
 
-    Jeho idea stojí na myšlence \emph{jednosměrných funkcí}. Jednosměrná funkce $F$ je taková funkce, že pro každý vstup $x$ lze
+    Jeho idea stojí na myšlence \emph{jednosměrných funkcí}. Jednosměrná funkce $F$ je taková funkce, kde pro každý vstup $x$ lze
     snadno spočítat $F(x)$, ale z $F(x)$ nelze snadno zjistit původní $x$.\footnote{Jako praktický příklad se často uvádí smíchání dvou barev.
-    Zřejmě lze dvě různé barvy snadno smíchat a zjistit barvu, která vznikne.
+    Dvě různé barvy lze snadno smíchat a následně zjistit barvu, která vznikne.
     Z výsledné barvy samotné ale zřejmě není jednoduché zjistit barvy, jejichž smícháním vznikla.}
     Jinými slovy, není snadné k funkci $F$ najít inverzní funkci $F^{-1}$.
 
@@ -378,11 +391,12 @@
     \begin{itemize}
         \item
             Alice náhodně vygeneruje svůj tajný klíč $\alpha$ a spočítá $H(\alpha)$.
-            To stejné provede Bob se pro svůj tajný klíč $\beta$.
+            To stejné provede Bob pro svůj náhodně vygenerovaný tajný klíč $\beta$.
         \item
             Alice a Bob si přes síť vymění $H(\alpha)$ a $H(\beta)$.
         \item
-            Alice i Bob si s pomocí svého tajného klíče a zašifrovaného klíče toho druhého vypočítají $C(\alpha,\beta)$.
+            Alice s pomocí svého tajného klíče $\alpha$ a obdrženého $H(\beta)$ vypočítá $C(\alpha,\beta)$.
+            Stejně učiní Bob se svým tajným klíčem $\beta$ a obdrženého klíče $H(\alpha)$.
         \item
             Alice a Bob v komunikaci použijí $k = C(\alpha,\beta)$ jako jejich společný tajný klíč.
     \end{itemize}
@@ -407,126 +421,163 @@
     \medskip
 
     Teď jen stačí nalézt vhodné funkce $H$ a $C$ tak, aby splňovaly podmínky.
+
+    \medskip
+
     Zvolme:
 
     \begin{center}
         $H(x) = g^x$
 
-        $C(x, y) = (g^x)^y$
+        $C(x, y) = (g^x)^y$,
 
         \medskip
-        (kde g je vhodně zvolený generátor)
+        kde g je vhodně zvolený generátor.
     \end{center}
 
-    Tyto funkce už zřejmě splňují podmínky 1--3. Ke splnění podmínky 4 musí platit to, že operace inverzní k H je obtížná.
-    Zároveň, abychom předešli tomu, že vygenerovaný klíč bude příliš velký (což jak víme není vhodné), budeme pracovat
-    s adekvátní konečnou algebraickou doménou. Nyní můžeme kompletně popsat algoritmus výměny klíče.
+    Tyto funkce už zřejmě splňují podmínky 1--3. Abychom předešli tomu, že vygenerovaný klíč bude příliš velký
+    (což jak víme není vhodné), budeme pracovat s adekvátní konečnou algebraickou doménou.
+
+    Ke splnění podmínky 4 tedy musí platit, že funkce $H^{-1}$ je výpočetně náročná.
+    Tou bude v našem případě funkce \emph{diskrétního logaritmu}.
 
 
     \subsection{Protokol D-H}
 
-    Alice a Bob se nejprve musí domluvit na velkém prvočísle $p$ a generátoru $g$ grupy $\mathbb{F}^*_p$.
-    Nalezení generátoru $g$ grupy není obecně jednoduchý úkol. Můžeme ale předpokládat, že je to parametr sdílený všemi uživateli v síti.
+        % todo q dělí p-1 atd.. z graduate course
 
-    \begin{enumerate}
-        \item
-            Alice pošle Bobovi velké prvočíslo $p$ a generátor $g$.
-            Domluvit se můžou i nezabezpečenou komunikací přes síť. Nevadí nám, že Eva $p$ a $g$ zachytí.
-        \item
-            Alice náhodně vybere (velké) číslo $\alpha \in \mathbb{N}$, vypočítá $A=g^\alpha \mod{p}$ a $A$ pošle po síti Bobovi.
-        \item
-            Bob náhodně vybere (velké) číslo $\beta \in \mathbb{N}$, vypočítá $B=g^\beta \mod{p}$ a $B$ pošle po síti Alici.
-        \item
-            Alice vypočítá $k=B^\alpha \mod{p}$.
-        \item
-            Bob vypočítá $k=A^\beta \mod{p}$.
+        Alice a Bob se nejprve musí domluvit na velkém prvočísle $p$ (to bude určovat potřebnou konečnou doménu).
 
-    \end{enumerate}
+        Pro funkčnost protokolu potřebujeme, aby Alice i Bob znali generátor $g$ grupy $\mathbb{Z}^*_p$ (viz~\ref{def:Z*p}).
+        Nalezení generátoru grupy není obecně jednoduchý úkol. Budeme ale předpokládat, že $g$ je parametr sdílený všemi uživateli v síti (i Evou).
 
-    Všimněme si, že $B^\alpha \equiv g^{\beta \alpha} \pmod{p}$ a $A^\beta \equiv g^{\alpha \beta} \pmod{p}$. Z vlastnosti násobení
-    plyne, že $g^{\beta \alpha} = g^{\alpha \beta}$. Z těchto vlastností vyplývá, že Alice a Bob nezávisle na sobě získají stejný klíč $k$.
+        \begin{enumerate}
+            \item
+                Alice pošle Bobovi velké prvočíslo $p$.
+                Domluvit se můžou i nezabezpečenou komunikací přes síť. Nevadí nám, že Eva $p$ zachytí.
+            \item
+                Alice náhodně vybere (velké) číslo $\alpha \in \mathbb{N}$, vypočítá $A=g^\alpha \mod{p}$ a $A$ pošle po síti Bobovi.
+            \item
+                Bob náhodně vybere (velké) číslo $\beta \in \mathbb{N}$, vypočítá $B=g^\beta \mod{p}$ a $B$ pošle po síti Alici.
+            \item
+                Alice vypočítá $k=B^\alpha \mod{p}$.
+            \item
+                Bob vypočítá $k=A^\beta \mod{p}$.
+
+        \end{enumerate}
+
+        Všimněme si, že $B^\alpha \equiv g^{\beta \alpha} \pmod{p}$ a $A^\beta \equiv g^{\alpha \beta} \pmod{p}$. Z komutativity násobení
+        plyne, že $g^{\beta \alpha} = g^{\alpha \beta}$. Z tohoto vyplývá, že Alice a Bob nezávisle na sobě získají stejný klíč $k$.
 
 
-    \subsection{Bezpečnost D-H výměny klíčů}
+    \subsection{Bezpečnost D-H výměny klíčů}\label{subsec:diffie-hellman-safety}
 
-        Celou komunikaci na síti poslouchá Eva. Z návrhu našeho protokolu víme, že Eva zachytila $p, g, A$ (tedy $g^\alpha$) a $B$ (tedy $g^\beta$).
+        Celou komunikaci na síti poslouchá Eva. Z návrhu našeho protokolu víme, že Eva zachytila $p, A$ (tedy $g^\alpha$) a $B$ (tedy $g^\beta$).
+        Navíc zná generátor $g$.
         Jestliže chce Eva šifrované zprávy dešifrovat, musí získat $k$.
-        Musí tedy zjistit $g^{\alpha \beta}$ z $g, g^\alpha, g^\beta$ (aniž by znala $\alpha nebo \beta$).
-        Tomuto problému budeme říkat Diffieho-Hellmanův problém (zkráceně DHP).
+        Musí tedy zjistit $g^{\alpha \beta}$ z $g, g^\alpha, g^\beta$ (aniž by znala $\alpha$ nebo $\beta$).
+        Tomuto problému budeme říkat \emph{Diffieho-Hellmanův problém} (zkráceně DHP).
 
         Platí, že Eva je schopna vyřešit DHP, pokud umí vyřešit tzv. \emph{problém diskrétního logaritmu}.
         Ikdyž opačná implikace zatím nebyla dokázána, panuje shoda, že oba zmíněné problémy jsou ekvivalentní.
 
-        Bezpečnost D-H výměny klíčů se tedy výrazně opírá o složitost řešení \emph{problém diskrétního logaritmu}. Tomu, za jakých podmínek považujeme
-        problém diskrétního logaritmu jako dostatečně bezpečný pro naše potřeby, se budeme věnovat v kapitole~\ref{sec:discrete-logarithm}
-    
-        V kapitole~\ref{introduction} jsme uvedli, že Eva umí komunikaci proudící po síti pouze číst. Eva tedy nemůže zprávy posílat, mazat, ani modifikovat.
-        Pokud se v síti nachází protivník, který takové schopnosti má, stává se námi uvedený protokol snadno napadnutelným. Protivníka, který bude mít
-        schopnost posílat, mazat a modifikovat zprávy v síti, nazveme Mallory.\footnote{Jméno Mallory (z angl. \emph{malicious attacker}) se nejčastěji používá jako
-        označení útočníka, který je (oproti Evě) aktivní.}
-
-        \bigskip
-
-        Ukažme si, jak by Mallory mohl komunikaci mezi Alicí a Bobem jednoduše napadnout:
-
-            % problém měnění zpráv (obejití DH protokolu)
-
-            \begin{itemize}
-                \item
-                    Alice pošle Bobovi velké prvočíslo $p$ a generátor $g$.
-                    Mallory tyto hodnoty zachytí a zapamatuje si je.
-                \item
-                    Alice náhodně vybere (velké) číslo $\alpha \in \mathbb{N}$, vypočítá $A=g^\alpha \mod{p}$ a $A$ pošle po síti Bobovi.
-                \item
-                    Mallory zprávu $A$ zachytí a nepošle ji dále Bobovi. Místo toho vybere velké číslo $\gamma \in \mathbb{N}$,
-                    vypočítá $C=g^\gamma \mod{p}$ a $C$ pošle po síti Bobovi.
-                \item
-                    Bob náhodně vybere (velké) číslo $\beta \in \mathbb{N}$, vypočítá $B=g^\beta \mod{p}$ a $B$ pošle po síti Alici.
-                \item
-                    Mallory zprávu $B$ zachytí a nepošle ji Alici. Místo toho Alici pošle $C$.
-                \item
-                    Alice vypočítá $k_1=C^\alpha \mod{p}$. Bob vypočítá $k_2=C^\beta \mod{p}$.
-                \item
-                    Mallory vypočítá $k_1=A^\gamma \mod{p}$ a $k_2=B^\gamma \mod{p}$.
-
-            \end{itemize}
-
-            % todo [obrázek]
-
-
-            Alice a Bob si nyní můžou myslet, že se dohodli na společném klíči, pomocí kterého povedou zabezpečenou komunikaci.
-            Ve skutečnosti bude ale jejich veškerou komunikaci číst (případně měnit) Mallory, aniž by o tom Alice s Bobem věděli.
-            Ukažme si to na příkladu komunikace, která probíhá po výše zmíněné výměně klíče.
-
-            Alice pomocí $k_1$ zašifruje zprávu $m$ a pošle $c$ po síti Bobovi. Mallory $c$ zachytí a pomocí $k_1$ ji dešifruje.
-            Zprávu $m$ si nyní může přečíst a kompletně změnit její obsah.
-            Upravenou zprávu $m'$ zašifruje pomocí $k_2$ a $c'$ pošle Bobovi.\footnote{Pokud Mallory zprávy pouze čte, potom zřejmě $m = m'$.}
-            Bob zprávu $c'$ dešifruje pomocí $k_2$.
-
-            Problém je jistě v autentifikaci zpráv. Alice ani Bob nemají možnost zjistit, že byla zpráva někým upravena.
-            Bob nemá nikdy jistotu, že obdrženou zprávu poslala opravdu Alice (a naopak).
-
-            \medskip
-
-            Šifrovací metody, které autentifikaci zajišťují, představíme v části~\ref{public-key}.
-
+        Bezpečnost D-H výměny klíčů se tedy výrazně opírá o složitost řešení problému diskrétního logaritmu.
+        Tomu, za jakých podmínek jej považujeme za obtížně řešitelný (a tedy D-H výměnu jako bezpečnou), se budeme věnovat v následující kapitole.
     
 
-
-    
-
-\section{Problém diskrétního logaritmu}\label{sec:discrete-logarithm}
-    % vedoucí k DLP
+\section{Problém diskrétního logaritmu}\label{sec:discrete-log}
     % algoritmus pro vyřešení
     % todo delitele p (p-1 musí mít dělitele velké liché prime)
     % velikost p
+
+        V podkapitole~\ref{subsec:diffie-hellman-safety} jsme představili problém DHP.
+        Úkolem bylo zjistit $g^{\alpha \beta}$ z $g, g^\alpha, g^\beta$ bez znalosti $\alpha$ a $\beta$.
+
+        Pokud bychom byli schopni z $g^\alpha$ efektivně získat $\alpha$ (případně z $g^\beta$ získat $\beta$), uměli bychom také
+        efektivně řešit DHP.
+
+        \newpage
+
+        \begin{definition}
+            Problém diskrétního logaritmu (DLP)
+            
+            Nechť $\mathbb{G}$ je cyklická grupa [prvočíselného] řádu $q$, $g$ její generátor a $x$ libovolný prvek z $\mathbb{G}$.
+
+            Přirozené číslo $e$ takové, že
+                \begin{center}
+                    $g^e \equiv x \pmod{q}$
+                \end{center}
+            
+            nazveme diskrétním logaritmem o základu $g$ z $x$.
+
+            Problém nalezení minimálního diskrétního logaritmu o základu $g$ z $x$ nazveme \textbf{problém diskrétního logaritmu}.
+
+        \end{definition}
+
+
+        [promyslet q, prvočíselnost cyklické grupy a konkretizaci D-H]
+
+
+        \subsection{Počítání diskrétního logaritmu}\label{subsec:counting-discrete-log}
+
+        [Pohlig-Hellman algoritmus]
+
+
     
+
+\section{Napadení protokolu D-H trochu jinak}
+
+
+    V kapitole~\ref{introduction} jsme uvedli, že Eva umí komunikaci proudící po síti pouze číst. Eva tedy nemůže zprávy posílat, mazat, ani modifikovat.
+    Pokud se v síti nachází protivník, který takové schopnosti má, stává se námi uvedený protokol snadno napadnutelným. Protivníka, který bude mít
+    schopnost posílat, mazat a modifikovat zprávy v síti, nazveme Mallory.\footnote{Jméno Mallory (z angl. \emph{malicious attacker}) se nejčastěji používá jako
+    označení útočníka, který je (oproti Evě) aktivní.}
+
+    \bigskip
+
+    Ukažme si, jak by Mallory mohl komunikaci mezi Alicí a Bobem jednoduše napadnout.
+    Alice s Bobem se chtějí domluvit na tajném klíči $k$ (kterým budou šifrovat zprávy) pomocí protokolu D-H.
+
+        \begin{itemize}
+            \item
+                Alice pošle Bobovi velké prvočíslo $p$.
+                Mallory $p$ zachytí a zapamatuje si ho.
+            \item
+                Alice náhodně vybere (velké) číslo $\alpha \in \mathbb{N}$, vypočítá $A=g^\alpha \mod{p}$ a $A$ pošle po síti Bobovi.
+            \item
+                Mallory zprávu $A$ zachytí a nepošle ji dále Bobovi. Místo toho vybere velké číslo $\gamma \in \mathbb{N}$,
+                vypočítá $C=g^\gamma \mod{p}$ a $C$ pošle po síti Bobovi.
+            \item
+                Bob náhodně vybere (velké) číslo $\beta \in \mathbb{N}$, vypočítá $B=g^\beta \mod{p}$ a $B$ pošle po síti Alici.
+            \item
+                Mallory zprávu $B$ zachytí a nepošle ji Alici. Místo toho Alici pošle $C$.
+            \item
+                Alice vypočítá $k_1=C^\alpha \mod{p}$. Bob vypočítá $k_2=C^\beta \mod{p}$.
+            \item
+                Mallory vypočítá $k_1=A^\gamma \mod{p}$ a $k_2=B^\gamma \mod{p}$.
+
+        \end{itemize}
+
+        % todo [obrázek]
+
+        Alice a Bob si nyní můžou myslet, že se dohodli na společném klíči, pomocí kterého povedou zabezpečenou komunikaci.
+        Ve skutečnosti bude ale jejich veškerou komunikaci číst (případně měnit) Mallory, aniž by o tom Alice s Bobem věděli.
+        Ukažme si to na příkladu komunikace, která probíhá po výše zmíněné výměně klíče.
+
+        Alice pomocí $k_1$ zašifruje zprávu $m$ a pošle $c$ po síti Bobovi. Mallory $c$ zachytí a pomocí $k_1$ ji dešifruje.
+        Zprávu $m$ si nyní může přečíst a kompletně změnit její obsah.
+        Upravenou zprávu $m'$ zašifruje pomocí $k_2$ a $c'$ pošle Bobovi.\footnote{Pokud Mallory zprávy pouze čte, potom zřejmě $m = m'$.}
+        Bob zprávu $c'$ dešifruje pomocí $k_2$.
+
+        Problém je jistě v autentifikaci zpráv. Alice ani Bob nemají možnost zjistit, že byla zpráva někým upravena.
+        Bob nemá nikdy jistotu, že obdrženou zprávu poslala opravdu Alice (a naopak).
+
+        \medskip
+
+        Šifrovací metody, které autentifikaci zajišťují (a budou tedy komunikaci chránit i před Mallorym), představíme v části~\ref{public-key}.
 
     
 \part{Asymetrické šifrování}\label{public-key}
 
-
-
-%\printbibliography
 
 \end{document}
