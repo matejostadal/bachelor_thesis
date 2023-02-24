@@ -1,15 +1,52 @@
-\documentclass[12pt]{article}
-\usepackage[T1]{fontenc}
-\usepackage{amsfonts}
+\documentclass[
+  program=infoi,
+% printversion,
+  biblatex,
+  figures=false,
+  glossaries,
+  index
+]{kidiplom}
+
+
+\title{Využití prvočísel při šifrování dat}
+\title[english]{Use of prime numbers in data encryption}
+
+\author{Matěj Ošťádal}
+
+\supervisor{doc. RNDr. Miroslav Kolařík, Ph.D.}
+
+
+\annotation{TODO ANOTACE}
+\annotation[english]{TODO ANOTACE ANGLICKY}
+
+\keywords{šifrování; prvočísla; bezpečnost; modulární aritmetika; }
+\keywords[english]{encryption; prime numbers; security; modular arithmetic}
+
+\supplements{žádné}
+\supplements[english]{none}
+
+% \thanks{Děkuji, děkuji, děkuji.}
+
+\bibliography{bibliografie.bib}
+
+%% Další dodatečné styly (balíky) potřebné pro sazbu vlastního textu
+%% práce.
+\usepackage{lipsum}
+\usepackage{longtable}
 \usepackage{amsmath}
 \usepackage{hyperref}
 
-\usepackage{biblatex}
-
-\newtheorem{definition}{Definice}[section]
-\newtheorem{theorem}{Věta}[section]
-
 \begin{document}
+
+\maketitle
+
+%% Vlastní text závěrečné práce. Pro povinné závěry, před přílohami,
+%% použijte prostředí kiconclusions. Povinná je i příloha s obsahem
+%% přiloženého datového média.
+
+%% -------------------------------------------------------------------
+
+\newcommand{\BibLaTeX}{\textsc{Bib}\LaTeX}
 
 \part{Úvod}\label{introduction}
 

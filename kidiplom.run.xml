@@ -44,39 +44,48 @@
   <internal package="biblatex" priority="9" active="0">
     <generic>latex</generic>
     <provides type="dynamic">
-      <file>bachelor.bcf</file>
+      <file>kidiplom.bcf</file>
     </provides>
     <requires type="dynamic">
-      <file>bachelor.bbl</file>
+      <file>kidiplom.bbl</file>
     </requires>
     <requires type="static">
       <file>blx-dm.def</file>
+      <file>iso-numeric.dbx</file>
       <file>blx-compat.def</file>
       <file>biblatex.def</file>
-      <file>standard.bbx</file>
-      <file>numeric.bbx</file>
+      <file>blx-natbib.def</file>
+      <file>iso.bbx</file>
+      <file>iso-numeric.bbx</file>
       <file>numeric.cbx</file>
+      <file>iso-numeric.cbx</file>
       <file>biblatex.cfg</file>
       <file>english.lbx</file>
+      <file>english-iso.lbx</file>
+      <file>czech.lbx</file>
+      <file>czech-iso.lbx</file>
     </requires>
   </internal>
   <external package="biblatex" priority="5" active="0">
     <generic>biber</generic>
     <cmdline>
       <binary>biber</binary>
-      <infile>bachelor</infile>
+      <infile>kidiplom</infile>
     </cmdline>
     <input>
-      <file>bachelor.bcf</file>
+      <file>kidiplom.bcf</file>
     </input>
     <output>
-      <file>bachelor.bbl</file>
+      <file>kidiplom.bbl</file>
     </output>
     <provides type="dynamic">
-      <file>bachelor.bbl</file>
+      <file>kidiplom.bbl</file>
     </provides>
     <requires type="dynamic">
-      <file>bachelor.bcf</file>
+      <file>kidiplom.bcf</file>
+    </requires>
+    <requires type="editable">
+      <file>bibliografie.bib</file>
     </requires>
   </external>
 </requests>
