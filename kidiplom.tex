@@ -91,7 +91,6 @@
     Symetrické šifrování je způsob šifrování, ve kterém je v procesu zašifrování zprávy použit
     stejný klíč \emph{k}, jako v procesu dešifrování.\footnote{Písmeno $k$ opět používáno kvůli anglickému \emph{key}.}
 
-    % todo zopakovat problém pro nás kdyby útočník zjistil náš klíč (zpětně přečte veškerou konverzaci)
     % citace z Graduate Course ...
 
     \bigskip
@@ -205,7 +204,7 @@
     jejich spojením vznikne zašifrovaná zpráva $c$.
     
     \bigskip
-    Na okraj ještě uveďme, že se u klíčů můžeme omezit na podmnožinu nezápormých celých čísel a pracovat pouze s
+    Na okraj ještě uveďme, že se u klíčů můžeme omezit na podmnožinu nezáporných celých čísel a pracovat pouze s
     $\mathcal{K} =\{n \in \mathbb{N}_0 \mid n < |\Sigma|\}$
     bez újmy na obecnosti. Je zřejmé, že například pro množinu symbolů velikosti 2 by každý lichý klíč prohodil
     každý symbol na opačný a každý sudý klíč by nechal $m$ beze změny. Mohli bychom se tedy omezit pouze na $k \in \{0,1\}$
@@ -301,6 +300,10 @@
         Za předpokladu, že klíč $k$ je vybrán dokonale náhodně, a že klíč není použit opakovaně, je Vernamova šifra tzv.
         \emph{dokonale bezpečná}.
 
+        % todo zopakovat problém pro nás kdyby útočník zjistil náš klíč (zpětně přečte veškerou konverzaci)
+
+
+
 
 \section{Bezpečnost v teorii a praxi}
     
@@ -311,6 +314,12 @@
     Pokud by tomu tak nebylo, Eva by přirozeně nejprve vyzkoušela nejvíce pravděpodobné klíče.
 
     Je také nutné, aby $c$ byla nezávislá na $m$ a nijak s ní nesouvisela. Případná souvislost by Evě mohla zjednodušit získání $m$.
+
+    \begin{remark}
+        Riziko přináší také opakované použití stejného klíče.
+        Pokud by napříč celou komunikací byl použit stejný klíč, útočník by mohl (například po náhodném získání klíče) zpětně
+        dešifrovat každou zprávu, která komunikací prošla.
+    \end{remark}
 
     \subsection*{Dokonalé zabezpečení}
     Jako zlatý standard, nebo ideál bezpečnosti se uvádí takzvané \emph{dokonalé zabezpečení}.\footnote{V anglicky psané
@@ -378,27 +387,88 @@
 
     [obsah doplním následně po DH a RSA dle použitého obsahu, kterému tuto kapitolu přizpůsobím]
 
+    V této kapitole uvedeme několik definic a vět, které nám pomůžou v dalších pasážích tohoto textu.
+    Na některé z nich budeme přímo odkazovat.
+    
     % todo co musi ctenar vedet
-    % generator, počet generátorů
-    % grupy Zn
-    % dusledky pro Zp
-    % cyklicka grupa
-    % multiplikativni grupa (grupa Zmod n vyhledem k nasobeni)
-    % Lagrangova věta
+    U čtenáře předpokládáme základní znalosti z teorie grup, kongruence $\mod{n}$ a dělitelnosti.
 
-    % $\mathbb{F}^*_p = \mathbb{Z}/p\mathbb{Z}$ $(2 \leq g \leq  p-2)$
-    % faktorova grupa
+    
+    % dusledky pro Zp
+    % multiplikativni grupa (grupa Zmod n vyhledem k nasobeni)
+
 
     % zdroj A Graduate Course... úplně nakonci Appendix A
 
-    \begin{definition}\label{def:Z*p}
-        Multiplikativní grupu nenulových zbytkových tříd modulo $p$ budeme značit $\mathbb{Z}^*_p$. [definice -> dohoda]
+    % Cyklicnost a generatory
+
+    \begin{definition}
+        Grupa $G$ se nazývá cyklická, jestliže existuje prvek $g \in G$ takový, že $G =\{g^k \mid k \in \mathbb{Z}\}$.
+        Prvek $g$ se nazývá generátor cyklické grupy.
     \end{definition}
 
     \begin{definition}
-        Pro libovolné prvočíslo $p$ je $\mathbb{Z}^*_p$ cyklická.
+        Řád prvku $a$ v grupě $G$ je nejmenší přirozené číslo b takové, že $a^b = e$, kde $e$ je neutrálním prvkem grupy $G$.
     \end{definition}
 
+
+    
+    \begin{definition}\label{def:Z*p}
+        Multiplikativní grupu nenulových zbytkových tříd modulo $p$ budeme značit $\mathbb{Z}^*_p$.
+    \end{definition}
+
+    \begin{theorem}
+        Pro libovolné prvočíslo $p$ je $\mathbb{Z}^*_p$ cyklická.
+    \end{theorem}
+
+    \begin{definition}
+        Neutrální prvek multiplikativní grupy budeme nazývat \emph{jednička}.
+    \end{definition}
+
+
+
+
+    [TODO VYBRAT VARIANTU]
+
+    \begin{theorem}
+        (Lagrangova věta)
+        Nechť $H$ je podgrupa grupy $G$. Pak $|H|$ dělí $|G|$.
+    \end{theorem}
+
+    \begin{consequence}
+        Řád každého prvku $a \in G$ dělí $|G|$.
+    \end{consequence}
+
+
+
+    \begin{theorem}
+        (Cauchyho věta)
+        Nechť $G$ je konečná grupa řádu $n$ a $p$ je prvočíslo.
+        Pokud $p$ dělí $n$, pak v G existuje prvek (a tedy i cyklická podgrupa) řádu $p$.
+    \end{theorem}
+
+
+
+
+    % Euler
+
+    \begin{definition}
+        Eulerova funkce $\varphi: \mathbb{N} \rightarrow \mathbb{N}$ přiřazuje každému přirozenému číslu $n$
+        počet přirozených čísel menších nebo rovno $n$, která jsou s $n$ nesoudělná.
+
+        \begin{center}
+            $\varphi(n) = |K|$, kde $K = \{k \in \mathbb{N} \mid k \leq n; NSD(k,n)=1\}$
+        \end{center}
+
+    \end{definition}
+
+    \begin{theorem}\label{the:generators-count}
+        Každá konečná cyklická grupa řádu n má právě $\varphi(n)$ různých generátorů, kde $\varphi$ je Eulerova funkce.
+    \end{theorem}
+
+    \begin{consequence}\label{con:generators-count}
+        Každá konečná cyklická grupa prvočíselného řádu $p$ má $p-1$ různých generátorů.
+    \end{consequence}
 
 
 
@@ -484,7 +554,14 @@
         Alice a Bob se nejprve musí domluvit na velkém prvočísle $p$ (to bude určovat potřebnou konečnou doménu).
 
         Pro funkčnost protokolu potřebujeme, aby Alice i Bob znali generátor $g$ grupy $\mathbb{Z}^*_p$ (viz~\ref{def:Z*p}).
-        Nalezení generátoru grupy není obecně jednoduchý úkol. Budeme ale předpokládat, že $g$ je parametr sdílený všemi uživateli v síti (i Evou).
+        Nalezení generátoru grupy není obecně jednoduchý úkol.
+        Budeme ale předpokládat, že $g$ je parametr sdílený všemi uživateli v síti (i Evou).
+
+        \begin{remark}
+            Generátorem grupy $\mathbb{Z}^*_p$ \textbf{není} její libovolný prvek různý od jedničky.
+            Grupa $\mathbb{Z}^*_p$ je řádu $p-1$, neplatí pro ni tedy Důsledek~\ref{con:generators-count}.
+        \end{remark}
+
 
         \begin{enumerate}
             \item
@@ -549,15 +626,10 @@
             Problému nalezení diskrétního logaritmu o základu $g$ z $x$ budeme nazývat \textbf{problém diskrétního logaritmu}.
 
         \end{definition}
-
-        There are a number of candidate group families G where the discrete logarithm function is believed
-        to be hard to compute. For example, when p and q are sufficiently large, suitably chosen primes,
-        the discrete logarithm function in the order q subgroup of Z*p is believed to be hard to compute
-        (p should be at least 2048-bits, and q should be at least 256-bits).
         
         Existuje řada grup $\mathbb{G}$, u nichž předpokládáme, že je v nich problém diskrétního logaritmu obtížně řešitelný.
         Na tomto předpokladu stojí bezpečnost řady šifrovacích protokolů, včetně Diffieho-Hellmanovy výměny klíčů
-        (jak jsme uvedli v sekci~\ref{subsec:diffie-hellman-security})
+        (jak jsme uvedli v sekci~\ref{subsec:diffie-hellman-security}).
 
         % attack game 10.4 A Graduate Course - 407
 
@@ -565,11 +637,14 @@
             (Předpoklad diskrétního logaritmu)
             
             Budeme říkat, že předpoklad diskrétního logaritmu platí pro cyklickou grupu $\mathbb{G}$, právě tehdy když
-            pravděpodobnost nalezení diskrétního logaritmu je zanedbatelná. 
+            pravděpodobnost správného určení diskrétního logaritmu je zanedbatelná. 
 
         \end{definition}
 
         % Graduate Course... 409, 684
+
+        \subsection{}
+
 
         [promyslet q, prvočíselnost cyklické grupy a konkretizaci D-H]
 
