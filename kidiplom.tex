@@ -368,7 +368,7 @@
     využívala klíče efektivněji než Vernamova šifra.
 
     \begin{theorem}
-        Shannonova
+        (Shannonova věta)
 
         Nechť $\mathcal{E}  = (E, D)$ je šifra definovaná nad $(\mathcal{K},\mathcal{M},\mathcal{C})$.
         Je-li $\mathcal{E}$ dokonale bezpečná, potom $|\mathcal{K}| \geq |\mathcal{M}|$.
@@ -385,7 +385,8 @@
 
 \section{Modulární aritmetika}\label{sec:modular-arithmetic}
 
-    [obsah doplním následně po DH a RSA dle použitého obsahu, kterému tuto kapitolu přizpůsobím]
+    [Obsah doplním následně po DH a RSA dle použitého obsahu, kterému tuto kapitolu přizpůsobím.
+    Případně věty rozdělím přímo ke kapitolám, u kterých jsou využity.]
 
     V této kapitole uvedeme několik definic a vět, které nám pomůžou v dalších pasážích tohoto textu.
     Na některé z nich budeme přímo odkazovat.
@@ -412,7 +413,30 @@
     \end{definition}
 
 
+    \begin{theorem}
+        (Lagrangova věta)
+        Nechť $H$ je podgrupa grupy $G$. Pak $|H|$ dělí $|G|$.
+    \end{theorem}
+
+    \begin{consequence}
+        Řád každého prvku $a \in G$ dělí řád grupy $G$.
+    \end{consequence}
+
     
+
+
+    \begin{theorem}
+        (Cauchyho věta)
+        Nechť $G$ je konečná grupa řádu $n$ a $p$ je prvočíslo.
+        Pokud $p$ dělí $n$, pak v G existuje prvek (a tedy i cyklická podgrupa) řádu $p$.
+    \end{theorem}
+
+    \begin{consequence}\label{con:prime-cyclic}
+        Každá grupa prvočíselného řádu je cyklická.
+    \end{consequence}
+
+
+
     \begin{definition}\label{def:Z*p}
         Multiplikativní grupu nenulových zbytkových tříd modulo $p$ budeme značit $\mathbb{Z}^*_p$.
     \end{definition}
@@ -424,29 +448,6 @@
     \begin{definition}
         Neutrální prvek multiplikativní grupy budeme nazývat \emph{jednička}.
     \end{definition}
-
-
-
-
-    [TODO VYBRAT VARIANTU]
-
-    \begin{theorem}
-        (Lagrangova věta)
-        Nechť $H$ je podgrupa grupy $G$. Pak $|H|$ dělí $|G|$.
-    \end{theorem}
-
-    \begin{consequence}
-        Řád každého prvku $a \in G$ dělí $|G|$.
-    \end{consequence}
-
-
-
-    \begin{theorem}
-        (Cauchyho věta)
-        Nechť $G$ je konečná grupa řádu $n$ a $p$ je prvočíslo.
-        Pokud $p$ dělí $n$, pak v G existuje prvek (a tedy i cyklická podgrupa) řádu $p$.
-    \end{theorem}
-
 
 
 
@@ -600,16 +601,12 @@
     
 
 \section{Problém diskrétního logaritmu}\label{sec:discrete-log}
-    % algoritmus pro vyřešení
-    % todo delitele p (p-1 musí mít dělitele velké liché prime)
-    % velikost p
-
+    
         V podkapitole~\ref{subsec:diffie-hellman-security} jsme představili problém DHP.
         Úkolem bylo zjistit $g^{\alpha \beta}$ z $g, g^\alpha, g^\beta$ bez znalosti $\alpha$ a $\beta$.
 
         Pokud bychom byli schopni z $g^\alpha$ efektivně získat $\alpha$ (případně z $g^\beta$ získat $\beta$), uměli bychom také
         efektivně řešit DHP.
-
 
         \begin{definition}
             Problém diskrétního logaritmu (DLP)
@@ -637,21 +634,45 @@
             (Předpoklad diskrétního logaritmu)
             
             Budeme říkat, že předpoklad diskrétního logaritmu platí pro cyklickou grupu $\mathbb{G}$, právě tehdy když
-            pravděpodobnost správného určení diskrétního logaritmu je zanedbatelná. 
+            je pravděpodobnost správného určení diskrétního logaritmu zanedbatelná. 
 
         \end{definition}
 
         % Graduate Course... 409, 684
 
-        \subsection{}
+        V následujících podkapitolách se zaměříme na volbu grupy $G$ a vliv jejích
+        vlastností na obtížnost DLP. Předem jen uveďme, že obtížnost DLP je úzce provázána s prvočísly.
+
+        \subsection{Obtížnost DLP}\label{sub:discrete-log-complexity}
+
+        Obtížnost DLP (a tedy i bezpečnost řady protokolů) se opírá o fakt, že v současné době není znám polynomiální
+        algoritmus, který by jej řešil.
 
 
-        [promyslet q, prvočíselnost cyklické grupy a konkretizaci D-H]
+        % todo
+
+
+        V současnosti se za vhodnou volbu $G$ považuje grupa řádu $n=p$, kde
+        $p$ je velké prvočíslo (alespoň 2048 bitů dlouhé). Pro $p$ také musí platit, že číslo $p-1$ má alespoň
+        jednoho velkého prvočíselného dělitele $q$ (alespoň 256 bitů).
+
+        Nejprve poznamenejme, že prvočíselný řád grupy $G$ nám automaticky zaručuje cykličnost (viz Důsledek \ref{con:prime-cyclic}).
+        Fakt, že 
+
+
+
+
+
+
+
 
 
         \subsection{Počítání diskrétního logaritmu}\label{subsec:counting-discrete-log}
 
+        [brute-force]
         [Pohlig-Hellman algoritmus]
+
+        \subsection{Kvantové útoky na DLP}
 
 
     
@@ -707,6 +728,7 @@
 
         Šifrovací metody, které autentifikaci zajišťují (a budou tedy komunikaci chránit i před Mallorym), představíme v části~\ref{public-key}.
 
+    \newpage
     
 \part{Asymetrické šifrování}\label{public-key}
 

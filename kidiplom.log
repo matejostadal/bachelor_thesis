@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2022.10.29)  26 FEB 2023 22:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2022.10.29)  27 FEB 2023 16:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1213,8 +1213,8 @@ Package hyperref Info: bookmark level for unknown remark defaults to 0 on input 
 Package hyperref Info: bookmark level for unknown definition defaults to 0 on input line 331.
 Package hyperref Info: bookmark level for unknown theorem defaults to 0 on input line 350.
  [12]
-Package hyperref Info: bookmark level for unknown consequence defaults to 0 on input line 439.
- [13] [14] [15] [16] [17]
+Package hyperref Info: bookmark level for unknown consequence defaults to 0 on input line 422.
+ [13] [14] [15] [16] [17] [18]
 
 Package glossaries Warning: No \printglossary or \printglossaries found. 
 (Remove \makeglossaries if you don't want any glossaries.) 
@@ -1222,23 +1222,23 @@ This document will not have a glossary.
 
 
 AED: lastpage setting LastPage
-[18] (kidiplom.aux)
+[19] (kidiplom.aux)
 Package logreq Info: Writing requests to 'kidiplom.run.xml'.
 \openout1 = `kidiplom.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 29872 strings out of 475385
- 540630 string characters out of 2776906
- 1454327 words of memory out of 3000000
- 50611 multiletter control sequences out of 15000+600000
+ 29879 strings out of 475385
+ 540740 string characters out of 2776906
+ 1454405 words of memory out of 3000000
+ 50614 multiletter control sequences out of 15000+600000
  560507 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  123i,10n,121p,2662b,1854s stack positions out of 10000i,1000n,20000p,200000b,80000s
 {C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}<C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr17.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/Matej/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on kidiplom.pdf (18 pages, 439580 bytes).
+Output written on kidiplom.pdf (19 pages, 442130 bytes).
 PDF statistics:
- 402 PDF objects out of 1000 (max. 8388607)
- 104 named destinations out of 1000 (max. 500000)
- 171 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 415 PDF objects out of 1000 (max. 8388607)
+ 108 named destinations out of 1000 (max. 500000)
+ 179 words of extra memory for PDF output out of 10000 (max. 10000000)
 
