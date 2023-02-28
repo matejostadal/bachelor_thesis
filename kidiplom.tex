@@ -553,6 +553,9 @@
     \subsection{Protokol D-H}
 
         Alice a Bob se nejprve musí domluvit na velkém prvočísle $p$ (to bude určovat potřebnou konečnou doménu).
+        Prvočíslo $p$ by mělo být alespoň 2048 bitů dlouhé.
+        Zároveň by mělo platit, že existuje prvočíslo $q$ (alespoň 256 bitů dlouhé), které dělí $p-1$.
+        K tomu, proč je existence $q$ důležitá se budeme věnovat v podkapitole~\ref{sub:silver-pohlig-hellman}.
 
         Pro funkčnost protokolu potřebujeme, aby Alice i Bob znali generátor $g$ grupy $\mathbb{Z}^*_p$ (viz~\ref{def:Z*p}).
         Nalezení generátoru grupy není obecně jednoduchý úkol.
@@ -562,7 +565,6 @@
             Generátorem grupy $\mathbb{Z}^*_p$ \textbf{není} její libovolný prvek různý od jedničky.
             Grupa $\mathbb{Z}^*_p$ je řádu $p-1$, neplatí pro ni tedy Důsledek~\ref{con:generators-count}.
         \end{remark}
-
 
         \begin{enumerate}
             \item
@@ -583,7 +585,7 @@
         plyne, že $g^{\beta \alpha} = g^{\alpha \beta}$. Z tohoto vyplývá, že Alice a Bob nezávisle na sobě získají stejný klíč $k$.
 
 
-    \subsection{Bezpečnost D-H výměny klíčů}\label{subsec:diffie-hellman-security}
+    \subsection{Bezpečnost D-H výměny klíčů}\label{sub:diffie-hellman-security}
 
         Celou komunikaci na síti poslouchá Eva. Z návrhu našeho protokolu víme, že Eva zachytila $p, A$ (tedy $g^\alpha$) a $B$ (tedy $g^\beta$).
         Navíc zná generátor $g$.
@@ -602,21 +604,22 @@
 
 \section{Problém diskrétního logaritmu}\label{sec:discrete-log}
     
-        V podkapitole~\ref{subsec:diffie-hellman-security} jsme představili problém DHP.
+        V podkapitole~\ref{sub:diffie-hellman-security} jsme představili problém DHP.
         Úkolem bylo zjistit $g^{\alpha \beta}$ z $g, g^\alpha, g^\beta$ bez znalosti $\alpha$ a $\beta$.
 
         Pokud bychom byli schopni z $g^\alpha$ efektivně získat $\alpha$ (případně z $g^\beta$ získat $\beta$), uměli bychom také
         efektivně řešit DHP.
 
-        \begin{definition}
+        \begin{definition}\label{def:dlp}
             Problém diskrétního logaritmu (DLP)
             
             Nechť $\mathbb{G}$ je cyklická grupa řádu $n$, $g$ její generátor a $x$ libovolný prvek z $\mathbb{G}$.
 
-            Přirozené číslo $e \in \mathbb{Z}_n$ takové, že
-                \begin{center}
-                    $g^e \equiv x \pmod{n}$
-                \end{center}
+            Číslo $e \in \mathbb{Z}_n$ takové, že
+
+                \begin{equation}\label{eq:discrete-log-1}
+                    g^e \equiv x \pmod{n}.
+                \end{equation}
             
             nazveme diskrétním logaritmem o základu $g$ z $x$.
 
@@ -626,11 +629,11 @@
         
         Existuje řada grup $\mathbb{G}$, u nichž předpokládáme, že je v nich problém diskrétního logaritmu obtížně řešitelný.
         Na tomto předpokladu stojí bezpečnost řady šifrovacích protokolů, včetně Diffieho-Hellmanovy výměny klíčů
-        (jak jsme uvedli v sekci~\ref{subsec:diffie-hellman-security}).
+        (jak jsme uvedli v sekci~\ref{sub:diffie-hellman-security}).
 
         % attack game 10.4 A Graduate Course - 407
 
-        \begin{definition}
+        \begin{definition}\label{def:discrete-log-assumption}
             (Předpoklad diskrétního logaritmu)
             
             Budeme říkat, že předpoklad diskrétního logaritmu platí pro cyklickou grupu $\mathbb{G}$, právě tehdy když
@@ -638,44 +641,141 @@
 
         \end{definition}
 
-        % Graduate Course... 409, 684
-
-        V následujících podkapitolách se zaměříme na volbu grupy $G$ a vliv jejích
+        V následujících podkapitolách se zaměříme na volbu grupy $\mathbb{G}$ a vliv jejích
         vlastností na obtížnost DLP. Předem jen uveďme, že obtížnost DLP je úzce provázána s prvočísly.
+
 
         \subsection{Obtížnost DLP}\label{sub:discrete-log-complexity}
 
         Obtížnost DLP (a tedy i bezpečnost řady protokolů) se opírá o fakt, že v současné době není znám polynomiální
         algoritmus, který by jej řešil.
 
-
-        % todo
-
-
-        V současnosti se za vhodnou volbu $G$ považuje grupa řádu $n=p$, kde
+        V současnosti se za vhodnou volbu $\mathbb{G}$ považuje grupa řádu $n=p$, kde
         $p$ je velké prvočíslo (alespoň 2048 bitů dlouhé). Pro $p$ také musí platit, že číslo $p-1$ má alespoň
         jednoho velkého prvočíselného dělitele $q$ (alespoň 256 bitů).
 
-        Nejprve poznamenejme, že prvočíselný řád grupy $G$ nám automaticky zaručuje cykličnost (viz Důsledek \ref{con:prime-cyclic}).
-        Fakt, že 
+        Poznamenejme, že prvočíselný řád grupy $\mathbb{G}$ nám automaticky zaručuje cykličnost (viz Důsledek~\ref{con:prime-cyclic}).
+        
+        Existence dělitele $q$ je nutná kvůli \emph{Pohlig-Hellmanovu algoritmu pro řešení diskrétního logaritmu}.
+
+        \begin{remark}
+            Složitost nalezení diskrétního logaritmu $x$ z~\ref{def:dlp} v grupě řádu $p$, kde $p$ má $k$ číslic, je prakticky
+            stejná jako faktorizace k-ciferného celého čísla.
+            Díky tomu můžeme říct, že výpočet diskrétních logaritmů je zhruba stejně obtížný jako faktorizace.
+            Pro faktorizaci, podobně jako pro nalezení diskrétního logaritmu, není znám žádný polynomiální algoritmus, který ji řeší.
+
+            % [citace] P. van Oorschot, A comparison of practical public-key cryptosystems based on integer factorization and discrete logarithms, in Contemporary Cryptography The Science of Information Integrity, G. Simmons, ed., IEEE Press, Piscatoway, New Jersey (1992), 289–322.
+
+            Je třeba zdůraznit, že jsme zatím nedokázali, že takový algoritmus ani neexistuje.\footnote{Tento fakt souvisí s problémem
+            $P$ versus $NP$. Ten patří k nejznámějším otevřeným problémům teoretické informatiky.}
+        \end{remark}
 
 
+        \subsection{Výpočet diskrétního logaritmu}\label{sub:computing-discrete-log}
+
+        % Graduate Course... 409, 680-687
+        Připomeňme problém DLP:
+
+        Nechť $\mathbb{G}$ je cyklická grupa řádu $n$ generovaná $g \in \mathbb{G}$.
+        Pro dané $x \in \mathbb{G}$ chceme najít $e \in \mathbb{Z}_n$ tak, že
+        
+        \begin{equation}\label{eq:discrete-log-2}
+            g^e \equiv x \pmod{n}.
+        \end{equation}
+        
+
+        \subsection{Hrubá síla}\label{sub:brute-forcing-discrete-log}
+            Nejjednodušším způsobem k nalezení diskrétního logaritmu je hrubá síla.
+            Algoritmus pracující tímto přístupem jednoduše vyzkouší všechny možné exponenty,
+            dokud nenajde exponent $e$ vyhovující~\ref{eq:discrete-log-2}.
+            
+            \begin{kicode}{TeX}{}{Nalezení diskrétního logaritmu hrubou silou}
+                function brute_force_dlog(base, result, modulus):
+
+                exponent = 0
+
+                while result != current_result:
+
+                    current_result = pow(base, exponent, modulus)
+                                    
+                    exponent += 1
+        
+            \end{kicode}
+
+            Takto navržený algoritmus je korektní. V nejhorším případě potřebuje provést $n$ násobení v grupě $\mathbb{G}$.
 
 
+        % Graduate Course 686
+        % RSA... 39-40
+        \subsection{Silver-Pohlig-Hellmanův algoritmus}\label{sub:silver-pohlig-hellman}
+
+            Dle \emph{základní věty aritmetiky} [TODO znění] lze každé přirozené číslo jednoznačně rozložit na součin prvočísel.
+            Nechť $n$ je řád grupy $\mathbb{G}$ a
+
+            \begin{center}\label{eq:factorization}
+                $n=q_1^{e_1} \cdots q_r^{e_r}$
+            \end{center}
+
+            je jeho faktorizace na součin $r$ různých prvočísel.
+
+            Způsob pro nalezení $e \in \mathbb{Z}_n$ vyhovující~\ref{eq:discrete-log-2} je následující:
+
+            
+            [TODO PROMYSLET KÓD] - kód naznačit zde / pouze programovat
 
 
+            Pokud je faktorizace~\ref{eq:factorization} dána, časová složitost Silver-Pohlig-Hellmanova algoritmu je
+
+                \begin{center}
+                    $\sum_{i=1}^r O(e_i T(q_i) + e_i \log{e_i} \log{q_i}) = O(T(q_{max}) \log{n} + \log{n} \log \log{n})$
+                \end{center}
+            
+            operací v grupě.
+            Funkce $T(q_i)$ označuje počet operací v grupě, které se musí provést pro zjištění diskrétního logaritmu
+            v podgrupě $\mathbb{G}$ řádu $q_i$. Hodnota $q_{max}$ značí největší prvočíslo.
+
+            Z této analýzy složitosti získáváme několik důležitých faktů.
+
+            \begin{theorem}\label{the:sph-complexity}
+                Složitost výpočtu diskrétního logaritmu v cyklické grupě řádu $n$ je dána velikostí největšího prvočísla, které dělí $n$.
+            \end{theorem}
+
+            Tato věta jasně určuje, v jakých grupách platí předpoklad diskrétního logaritmu (viz ~\ref{def:discrete-log-assumption}).
+
+            \begin{consequence}
+                Aby platil předpoklad diskrétního logaritmu v grupě $\mathbb{G}$, její řád musí mít alespoň
+                jednoho velkého prvočíselného dělitele.
+            \end{consequence}
+
+            Pokud bychom například chtěli spočítat diskrétní logaritmus v grupě $\mathbb{G}$ s řádem $n = 2^l$, bude
+            nám stačit provést $O(\log n \cdot \log \log n)$ operací v grupě.
+
+            Kdyby se tedy například Alice s Bobem u D-H výměny klíčů domluvili na prvočísle $p$ ve tvaru $p = 2^l + 1$ (např. $p = 65537$),
+            Evě by pro prolomení celé komunikace stačilo spočítat diskrétní logaritmus v grupě $\mathbb{Z}^*_p$.
+            Grupa $\mathbb{Z}^*_p$ by v tomto případě byla řádu $2^l$.
+            Výpočet diskrétního logaritmu (a tedy i získání tajného klíče $k$) by tedy pro Evu byl snadný úkol. 
 
 
+            \begin{remark}\label{rem:diffie-hellman-improved}
+                (Zefektivnění protokolu D-H)
 
-        \subsection{Počítání diskrétního logaritmu}\label{subsec:counting-discrete-log}
-
-        [brute-force]
-        [Pohlig-Hellman algoritmus]
+                Složitost Silver-Pohlig-Hellmanova algoritmu také dává návod pro zefektivnění D-H protokolu.
+                Namísto spuštění D-H protokolu v celé grupě $\mathbb{Z}^*_p$ stačí protokol spustit
+                v podgrupě $\mathbb{G}_{q_{max}}$ řádu $q_max$.
+            
+                Dle Věty~\ref{the:sph-complexity} takovéto omezení výrazně neomezí bezpečnost
+            \end{remark}
+    
 
         \subsection{Kvantové útoky na DLP}
 
-
+            [TODO]
     
+
+
+
+
+
 
 \section{Napadení protokolu D-H trochu jinak}
 

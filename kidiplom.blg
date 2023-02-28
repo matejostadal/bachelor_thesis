@@ -1,9 +1,9 @@
 [1] Config.pm:306> INFO - This is Biber 2.18
 [1] Config.pm:309> INFO - Logfile is 'kidiplom.blg'
-[574] biber-MSWIN64:340> INFO - === 
-[675] Biber.pm:418> INFO - Reading 'kidiplom.bcf'
-[1032] Biber.pm:978> INFO - Found 0 citekeys in bib section 0
-[1101] bbl.pm:654> INFO - Writing 'kidiplom.bbl' with encoding 'UTF-8'
-[1101] bbl.pm:757> INFO - Output to kidiplom.bbl
-[1106] Biber.pm:130> WARN - The file 'kidiplom.bcf' does not contain any citations!
-[1107] Biber.pm:132> INFO - WARNINGS: 1
+[359] biber-MSWIN64:340> INFO - === 
+[527] Biber.pm:418> INFO - Reading 'kidiplom.bcf'
+[891] Biber.pm:978> INFO - Found 0 citekeys in bib section 0
+[934] bbl.pm:654> INFO - Writing 'kidiplom.bbl' with encoding 'UTF-8'
+[935] bbl.pm:757> INFO - Output to kidiplom.bbl
+[936] Biber.pm:130> WARN - The file 'kidiplom.bcf' does not contain any citations!
+[936] Biber.pm:132> INFO - WARNINGS: 1
