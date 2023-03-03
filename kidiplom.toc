@@ -13,7 +13,7 @@
 \contentsline {section}{\numberline {6}Problém diskrétního logaritmu}{16}{section.6}%
 \contentsline {subsection}{\numberline {6.1}Obtížnost DLP}{17}{subsection.6.1}%
 \contentsline {subsection}{\numberline {6.2}Výpočet diskrétního logaritmu}{17}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}Hrubá síla}{18}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.3}Hrubá síla}{17}{subsection.6.3}%
 \contentsline {subsection}{\numberline {6.4}Silver-Pohlig-Hellmanův algoritmus}{18}{subsection.6.4}%
 \contentsline {subsection}{\numberline {6.5}Kvantové útoky na DLP}{19}{subsection.6.5}%
 \contentsline {section}{\numberline {7}Napadení protokolu D-H trochu jinak}{19}{section.7}%

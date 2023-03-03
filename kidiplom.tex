@@ -391,7 +391,7 @@
     Na některé z nich budeme přímo odkazovat.
     
     % todo co musi ctenar vedet
-    U čtenáře předpokládáme základní znalosti z teorie grup, kongruence $\mod{n}$ a dělitelnosti.
+    U čtenáře předpokládáme základní znalosti z teorie grup, kongruence modulo $n$ a dělitelnosti.
 
     
     % dusledky pro Zp
@@ -408,7 +408,7 @@
     \end{definition}
 
     \begin{definition}
-        Řád prvku $a$ v grupě $G$ je nejmenší přirozené číslo b takové, že $a^b = e$, kde $e$ je neutrálním prvkem grupy $G$.
+        Řád prvku $a$ v grupě $G$ je nejmenší přirozené číslo $b$ takové, že $a^b = e$, kde $e$ je neutrálním prvkem grupy $G$.
     \end{definition}
 
 
@@ -455,10 +455,10 @@
 
     \begin{definition}
         Eulerova funkce $\varphi: \mathbb{N} \rightarrow \mathbb{N}$ přiřazuje každému přirozenému číslu $n$
-        počet přirozených čísel menších nebo rovno $n$, která jsou s $n$ nesoudělná.
+        počet přirozených čísel menších nebo rovno $n$, která jsou s $n$ nesoudělná, tedy
 
         \begin{center}
-            $\varphi(n) = |K|$, kde $K = \{k \in \mathbb{N} \mid k \leq n; NSD(k,n)=1\}$
+            $\varphi(n) = |K|$, kde $K = \{k \in \mathbb{N} \mid k \leq n; NSD(k,n)=1\}$.
         \end{center}
 
     \end{definition}
@@ -532,15 +532,14 @@
 
     \medskip
 
-    Zvolme:
+    Pro vhodně vybraný generátor $g$ zvolme:
 
     \begin{center}
         $H(x) = g^x$
 
-        $C(x, y) = (g^x)^y$,
+        $C(x, y) = (g^x)^y$.
 
         \medskip
-        kde g je vhodně zvolený generátor.
     \end{center}
 
     Tyto funkce už zřejmě splňují podmínky 1--3. Abychom předešli tomu, že vygenerovaný klíč bude příliš velký
@@ -617,13 +616,13 @@
 
             Číslo $e \in \mathbb{Z}_n$ takové, že
 
-                \begin{equation}\label{eq:discrete-log-1}
+                \begin{equation}\label{eq:discrete-log}
                     g^e \equiv x \pmod{n}.
                 \end{equation}
             
             nazveme diskrétním logaritmem o základu $g$ z $x$.
 
-            Problém nalezení diskrétního logaritmu o základu $g$ z $x$ budeme nazývat \textbf{problém diskrétního logaritmu}.
+            Nalezení takového čísla $e$ budeme nazývat \textbf{problém diskrétního logaritmu}.
 
         \end{definition}
         
@@ -668,20 +667,11 @@
         \subsection{Výpočet diskrétního logaritmu}\label{sub:computing-discrete-log}
 
         % Graduate Course... 409, 680-687
-        Připomeňme problém DLP:
-
-        Nechť $\mathbb{G}$ je cyklická grupa řádu $n$ generovaná $g \in \mathbb{G}$.
-        Pro dané $x \in \mathbb{G}$ chceme najít $e \in \mathbb{Z}_n$ tak, že
-        
-        \begin{equation}\label{eq:discrete-log-2}
-            g^e \equiv x \pmod{n}.
-        \end{equation}
-        
 
         \subsection{Hrubá síla}\label{sub:brute-forcing-discrete-log}
             Nejjednodušším způsobem k nalezení diskrétního logaritmu je hrubá síla.
             Algoritmus pracující tímto přístupem jednoduše vyzkouší všechny možné exponenty,
-            dokud nenajde exponent $e$ vyhovující~\ref{eq:discrete-log-2}.
+            dokud nenajde exponent $e$ vyhovující~(\ref{eq:discrete-log}).
             
             \begin{kicode}{TeX}{}{Nalezení diskrétního logaritmu hrubou silou}
                 function brute_force_dlog(base, result, modulus):
@@ -703,7 +693,7 @@
         % RSA... 39-40
         \subsection{Silver-Pohlig-Hellmanův algoritmus}\label{sub:silver-pohlig-hellman}
 
-            Dle \emph{základní věty aritmetiky} [TODO znění] lze každé přirozené číslo jednoznačně rozložit na součin prvočísel.
+            Dle \emph{základní věty aritmetiky} [TODO znění] lze každé přirozené číslo větší než 1 jednoznačně rozložit na součin prvočísel.
             Nechť $n$ je řád grupy $\mathbb{G}$ a
 
                 \begin{equation}\label{eq:factorization}
@@ -714,7 +704,7 @@
 
             \medskip
 
-            Způsob pro nalezení $e \in \mathbb{Z}_n$ vyhovující~\ref{eq:discrete-log-2} je následující:
+            Způsob pro nalezení $e \in \mathbb{Z}_n$ vyhovující~(\ref{eq:discrete-log}) je následující:
 
             \bigskip
             
@@ -722,23 +712,24 @@
 
             \bigskip
 
-            Pokud je faktorizace~\ref{eq:factorization} dána, časová složitost Silver-Pohlig-Hellmanova algoritmu je
+            Pokud je faktorizace~(\ref{eq:factorization}) dána, časová složitost Silver-Pohlig-Hellmanova algoritmu je
 
-                \begin{center}
-                    $\sum_{i=1}^r O(e_i T(q_i) + e_i \log{e_i} \log{q_i}) = O(T(q_{max}) \log{n} + \log{n} \log \log{n})$
-                \end{center}
+                \begin{equation}\label{eq:sph-complexity}
+                    \sum_{i=1}^r O(e_i T(q_i) + e_i \log{e_i} \log{q_i}) = O(T(q_{max}) \log{n} + \log{n} \log \log{n}).
+                    \footnote{Předpokládáme, že operaci násobení v grupě provádíme v konstantním čase.}
+                \end{equation}
             
-            násobení v grupě.
+    
             Funkce $T(q_i)$ označuje počet násobení v grupě, které musí být provedeny pro zjištění diskrétního logaritmu
             v podgrupě $\mathbb{G}$ řádu $q_i$. Hodnota $q_{max}$ značí největší prvočíslo.
 
-            Z této analýzy složitosti získáváme několik důležitých faktů.
+            Ze složitosti~(\ref{eq:sph-complexity}) získáváme několik důležitých faktů.
 
             \begin{theorem}\label{the:sph-complexity}
                 Složitost výpočtu diskrétního logaritmu v cyklické grupě řádu $n$ je dána velikostí největšího prvočísla, které dělí $n$.
             \end{theorem}
 
-            Tato věta jasně určuje, v jakých grupách platí předpoklad diskrétního logaritmu (viz ~\ref{def:discrete-log-assumption}).
+            Tato věta jasně určuje, v jakých grupách platí předpoklad diskrétního logaritmu (viz~\ref{def:discrete-log-assumption}).
 
             \begin{consequence}
                 Aby platil předpoklad diskrétního logaritmu v grupě $\mathbb{G}$, její řád musí mít alespoň
@@ -778,7 +769,7 @@
 \section{Napadení protokolu D-H trochu jinak}
 
 
-    V kapitole~\ref{introduction} jsme uvedli, že Eva umí komunikaci proudící po síti pouze číst. Eva tedy nemůže zprávy posílat, mazat, ani modifikovat.
+    V části~\ref{introduction} jsme uvedli, že Eva umí komunikaci proudící po síti pouze číst. Eva tedy nemůže zprávy posílat, mazat, ani modifikovat.
     Pokud se v síti nachází protivník, který takové schopnosti má, stává se námi uvedený protokol snadno napadnutelným. Protivníka, který bude mít
     schopnost posílat, mazat a modifikovat zprávy v síti, nazveme Mallory.\footnote{Jméno Mallory (z angl. \emph{malicious attacker}) se nejčastěji používá jako
     označení útočníka, který je (oproti Evě) aktivní.}
