@@ -300,10 +300,6 @@
         Za předpokladu, že klíč $k$ je vybrán dokonale náhodně, a že klíč není použit opakovaně, je Vernamova šifra tzv.
         \emph{dokonale bezpečná}.
 
-        % todo zopakovat problém pro nás kdyby útočník zjistil náš klíč (zpětně přečte veškerou konverzaci)
-
-
-
 
 \section{Bezpečnost v teorii a praxi}
     
@@ -390,43 +386,35 @@
     V této kapitole uvedeme několik definic a vět, které nám pomůžou v dalších pasážích tohoto textu.
     Na některé z nich budeme přímo odkazovat.
     
-    % todo co musi ctenar vedet
     U čtenáře předpokládáme základní znalosti z teorie grup, kongruence modulo $n$ a dělitelnosti.
-
-    
-    % dusledky pro Zp
-    % multiplikativni grupa (grupa Zmod n vyhledem k nasobeni)
-
 
     % zdroj A Graduate Course... úplně nakonci Appendix A
 
     % Cyklicnost a generatory
 
     \begin{definition}
-        Grupa $G$ se nazývá cyklická, jestliže existuje prvek $g \in G$ takový, že $G =\{g^k \mid k \in \mathbb{Z}\}$.
+        Grupa $\mathbb{G}$ se nazývá cyklická, jestliže existuje prvek $g \in \mathbb{G}$ takový, že $\mathbb{G} =\{g^k \mid k \in \mathbb{Z}\}$.
         Prvek $g$ se nazývá generátor cyklické grupy.
     \end{definition}
 
     \begin{definition}
-        Řád prvku $a$ v grupě $G$ je nejmenší přirozené číslo $b$ takové, že $a^b = e$, kde $e$ je neutrálním prvkem grupy $G$.
+        Řád prvku $a$ v grupě $\mathbb{G}$ je nejmenší přirozené číslo $b$ takové, že $a^b = e$, kde $e$ je neutrálním prvkem grupy $\mathbb{G}$.
     \end{definition}
 
 
     \begin{theorem}[Lagrangova věta]
         
-        Nechť $H$ je podgrupa grupy $G$. Pak $|H|$ dělí $|G|$.
+        Nechť $\mathbb{H}$ je podgrupa grupy $\mathbb{G}$. Pak $|\mathbb{H}|$ dělí $|\mathbb{G}|$.
     \end{theorem}
 
     \begin{consequence}
-        Řád každého prvku $a \in G$ dělí řád grupy $G$.
+        Řád každého prvku $a \in \mathbb{G}$ dělí řád grupy $\mathbb{G}$.
     \end{consequence}
-
-    
 
 
     \begin{theorem}[Cauchyho věta]
 
-        Nechť $G$ je konečná grupa řádu $n$ a $p$ je prvočíslo.
+        Nechť $\mathbb{G}$ je konečná grupa řádu $n$ a $p$ je prvočíslo.
         Pokud $p$ dělí $n$, pak v G existuje prvek (a tedy i cyklická podgrupa) řádu $p$.
 
     \end{theorem}
@@ -434,6 +422,12 @@
     \begin{consequence}\label{con:prime-cyclic}
         Každá grupa prvočíselného řádu je cyklická.
     \end{consequence}
+
+
+    \begin{theorem}\label{the:subgroups}
+        Nechť $\mathbb{G}$ je cyklická grupa řádu $n$, $g$ její generátor a $b = g^a \in \mathbb{G}$.
+        Pak $b$ generuje cyklickou podgrupu $\mathbb{H}$ řádu $n/d$, kde $d$ je $NSD(n,s)$.
+    \end{theorem}
 
 
 
@@ -477,8 +471,6 @@
 
     % citace z Graduate Course ... str 406
     % RSA and public ... str 49
-
-    % todo analogie s mícháním barev
 
     V úvodu k symetrickému šifrování jsme zmínili, že výměna (respektive domluva)
     tajného klíče $k$ mezi Alicí a Bobem tak, aby jej nezískala Eva, není jednoduchý úkol.
@@ -628,7 +620,7 @@
         
         Existuje řada grup $\mathbb{G}$, u nichž předpokládáme, že je v nich problém diskrétního logaritmu obtížně řešitelný.
         Na tomto předpokladu stojí bezpečnost řady šifrovacích protokolů, včetně Diffieho-Hellmanovy výměny klíčů
-        (jak jsme uvedli v sekci~\ref{sub:diffie-hellman-security}).
+        (jak jsme uvedli v podkapitole~\ref{sub:diffie-hellman-security}).
 
         % attack game 10.4 A Graduate Course - 407
 
@@ -644,6 +636,7 @@
 
 
         \subsection{Obtížnost DLP}\label{sub:discrete-log-complexity}
+
 
         V současnosti se za vhodnou volbu $\mathbb{G}$ považuje grupa řádu $n=p$, kde
         $p$ je velké prvočíslo (alespoň 2048 bitů dlouhé). Pro $p$ také musí platit, že číslo $p-1$ má alespoň
@@ -668,99 +661,174 @@
 
         % Graduate Course... 409, 680-687
 
-        \subsection{Hrubá síla}\label{sub:brute-forcing-discrete-log}
-            Nejjednodušším způsobem k nalezení diskrétního logaritmu je hrubá síla.
-            Algoritmus pracující tímto přístupem jednoduše vyzkouší všechny možné exponenty,
-            dokud nenajde exponent $e$ vyhovující~(\ref{eq:discrete-log}).
-            
-            \begin{kicode}{TeX}{}{Nalezení diskrétního logaritmu hrubou silou}
-                function brute_force_dlog(base, result, modulus):
-
-                exponent = 0
-
-                while result != current_result:
-
-                    current_result = pow(base, exponent, modulus)
-                                    
-                    exponent += 1
-        
-            \end{kicode}
-
-            Takto navržený algoritmus je korektní. V nejhorším případě potřebuje provést $n$ násobení v grupě $\mathbb{G}$.
+            \subsubsection{Hrubá síla}\label{subsub:brute-forcing-discrete-log}
 
 
-        % Graduate Course 686
-        % RSA... 39-40
-        \subsection{Silver-Pohlig-Hellmanův algoritmus}\label{sub:silver-pohlig-hellman}
-
-            Dle \emph{základní věty aritmetiky} [TODO znění] lze každé přirozené číslo větší než 1 jednoznačně rozložit na součin prvočísel.
-            Nechť $n$ je řád grupy $\mathbb{G}$ a
-
-                \begin{equation}\label{eq:factorization}
-                    n=q_1^{e_1} \cdots q_r^{e_r}
-                \end{equation}
-
-            je jeho faktorizace na součin $r$ různých prvočísel.
-
-            \medskip
-
-            Způsob pro nalezení $e \in \mathbb{Z}_n$ vyhovující~(\ref{eq:discrete-log}) je následující:
-
-            \bigskip
-            
-            [TODO PROMYSLET KÓD] - kód naznačit zde / pouze programovat
-
-            \bigskip
-
-            Pokud je faktorizace~(\ref{eq:factorization}) dána, časová složitost Silver-Pohlig-Hellmanova algoritmu je
-
-                \begin{equation}\label{eq:sph-complexity}
-                    \sum_{i=1}^r O(e_i T(q_i) + e_i \log{e_i} \log{q_i}) = O(T(q_{max}) \log{n} + \log{n} \log \log{n}).
-                    \footnote{Předpokládáme, že operaci násobení v grupě provádíme v konstantním čase.}
-                \end{equation}
-            
-    
-            Funkce $T(q_i)$ označuje počet násobení v grupě, které musí být provedeny pro zjištění diskrétního logaritmu
-            v podgrupě $\mathbb{G}$ řádu $q_i$. Hodnota $q_{max}$ značí největší prvočíslo.
-
-            Ze složitosti~(\ref{eq:sph-complexity}) získáváme několik důležitých faktů.
-
-            \begin{theorem}\label{the:sph-complexity}
-                Složitost výpočtu diskrétního logaritmu v cyklické grupě řádu $n$ je dána velikostí největšího prvočísla, které dělí $n$.
-            \end{theorem}
-
-            Tato věta jasně určuje, v jakých grupách platí předpoklad diskrétního logaritmu (viz~\ref{def:discrete-log-assumption}).
-
-            \begin{consequence}
-                Aby platil předpoklad diskrétního logaritmu v grupě $\mathbb{G}$, její řád musí mít alespoň
-                jednoho velkého prvočíselného dělitele.
-            \end{consequence}
-
-            Pokud bychom například chtěli spočítat diskrétní logaritmus v grupě $\mathbb{G}$ s řádem $n = 2^l$, bude
-            nám stačit provést $O(\log n \cdot \log \log n)$ násobení v grupě.
-
-            \medskip
-
-            Kdyby se tedy například Alice s Bobem u D-H výměny klíčů domluvili na prvočísle $p$ ve tvaru $p = 2^l + 1$,
-            Evě by pro prolomení celé komunikace stačilo spočítat diskrétní logaritmus v grupě $\mathbb{Z}^*_p$.
-            Grupa $\mathbb{Z}^*_p$ by v tomto případě byla řádu $2^l$.
-            Výpočet diskrétního logaritmu (a tedy i získání tajného klíče $k$) by tedy pro Evu byl snadný úkol. 
-
-
-            \begin{remark}[Zefektivnění protokolu D-H]\label{rem:diffie-hellman-improved}
+                Nejjednodušším způsobem k nalezení diskrétního logaritmu je hrubá síla.
+                Algoritmus pracující tímto přístupem jednoduše vyzkouší všechny možné exponenty,
+                dokud nenajde exponent $e$ vyhovující~(\ref{eq:discrete-log}).
                 
-                Složitost Silver-Pohlig-Hellmanova algoritmu také dává návod pro zefektivnění D-H protokolu.
-                Namísto spuštění D-H protokolu v celé grupě $\mathbb{Z}^*_p$ stačí protokol spustit
-                v podgrupě $\mathbb{G}_{q_{max}}$ řádu $q_{max}$.
+                \begin{kicode}{TeX}{}{Nalezení diskrétního logaritmu hrubou silou}
+                    function brute_force_dlog(base, result, modulus):
+
+                        exponent = 0
+
+                        while result != current_result:
+
+                            current_result = pow(base, exponent, modulus)
+                                            
+                            exponent += 1
             
-                Dle Věty~\ref{the:sph-complexity} takovéto omezení bude mít pouze zanedbatelný vliv na bezpečnost protokolu.
+                \end{kicode}
 
-                Alici i Bobovi tímto omezením zmenšíme množinu exponentů, ze kterých budou vybírat své tajné klíče.
+                Takto navržený algoritmus je korektní. V nejhorším případě potřebuje provést $n$ násobení v grupě $\mathbb{G}$.
 
-            \end{remark}
+
+            % A Computational Introduction .... 331    
+            \subsubsection{Rekurzivní algoritmus}\label{subsub:recursive-discrete-log}
+                
+
+                Nechť $\mathbb{G}$ je grupa řádu $q^y$ s generátorem $g$, kde $q > 1, y \geq 1$.
+                Algoritmus, který v této podkapitole uvedeme, nám umožní redukovat řešení DLP
+                v této grupě na řešení DLP v grupě řádu $q$.
+
+                Nalezení diskrétního logaritmu o základu $g$ z $x$ probíhá rekurzivně.
+
+                \medskip
+
+                Ukončovací podmínkou bude případ, kdy $y = 1$. V tomto případě k výpočtu použijeme
+                algoritmus z podkapitoly~\ref{subsub:brute-forcing-discrete-log}.
+
+                V případě $y > 1$ zvolíme $z = \left\lfloor y/2\right\rfloor$.
+                Diskrétní logaritmus $e$ lze vyjádřit jako $e = q^{z}v + u$, pro $u, v \in \mathbb{N}$, kde $0 \leq u < q^z$ a $ 0 \leq v < q^{y-z}$.
+
+                \medskip
+
+                Potom platí
+                \begin{equation}\label{eq:rdl}
+                    x = g^e = g^{(q^z)v + u} = g^{(q^z)v} \cdot g^u.
+                \end{equation}
+                
+                Umocněním obou stran na $q^{y-z}$ získáme
+
+                \begin{equation}
+                    x^{q^{y-z}} = g^{q^{y-z}u}.
+                    \footnote{Protože $g^{(q^z)v}$ je řádu $q^{y-z}$.
+                    Umocněním tedy dle definice získáme jednotkový prvek, který se vzhledem k násobení chová neutrálně.}
+                \end{equation}
+                
+                Dle Věty~\ref{the:subgroups} platí, že $g^{q^{y-z}}$ je řádu $q^z$.
+                Můžeme tedy rekurzivně spočítat diskrétní logaritmus o základu $g^{q^{y-z}}$ z $x^{q^{y-z}}$.
+                Tímto způsobem můžeme rekurzivně pokračovat, dokud nenarazíme na ukončovací podmínku a nezískáme $u$.
+
+                Vydělením obou stran rovnice~(\ref{eq:rdl}) hodnotou $g^u$ získáme 
+                
+                \begin{equation}
+                    x/g^u = g^{q^{z}v}.
+                \end{equation}
+                
+                Opět z Věty~\ref{the:subgroups} plyne, že $g^{q^z}$ je řádu $q^{y-z}$.
+                Rekurzivně tedy můžeme spočítat diskrétní logaritmus o základu $g^{q^z}$ z $x/g^u$, dokud nezískáme $v$.
+
+                Po získání $u$ a $v$ snadno vypočítáme $x = q^{z}v+u$.
+                
+                \begin{kicode}{TeX}{}{Nalezení diskrétního logaritmu rekurzivním algoritmem}
+                    function recursive_dlog(base, result, q, y, modulus):
+
+                        if y = 1:
+                            return brute_force_dlog(base, result, modulus)
+
+                        z = y / 2
+
+                        pow(base, exponent, modulus)
+
+                        u_base = pow(base, q ** (y-z), modulus)
+                        u_result = pow(result, q ** (y-z), modulus)
+                        u = recursive_dlog(u_base, u_result, q, z, modulus)
+
+
+                        v_base = pow(base, q ** z, modulus)
+                        v_result = result / pow(base, u, modulus)
+                        v = recursive_dlog(v_base, v_result, q, y-z, modulus)
+                
+                        return (q ** z) * v + u
+                \end{kicode}
+
+
+            % Graduate Course 686
+            % RSA... 39-40
+            \subsubsection{Silver-Pohlig-Hellmanův algoritmus}\label{subsub:silver-pohlig-hellman}
+
+
+                Tento algoritmus nám kromě dalšího způsobu řešení problému DLP také ukazuje zajímavý vztah mezi 
+                faktorizací řádu grupy $\mathbb{G}$ a obtížností DLP v ní.            
+
+                \begin{theorem}[Základní věta aritmetiky]\label{the:fta}
+                    Každé přirozené číslo větší než jedna lze vyjádřit jednoznačně
+                    až na pořadí činitelů jako součin prvočísel.
+                \end{theorem}
+
+                Nechť $n$ je řád grupy $\mathbb{G}$. Pak dle Věty~\ref{the:fta} existuje rozklad
+
+                    \begin{equation}\label{eq:factorization}
+                        n=q_1^{e_1} \cdots q_r^{e_r}.
+                    \end{equation}
+
+                Algoritmus využívá algoritmu RDL z podkapitoly~\ref{subsub:recursive-discrete-log} a \emph{Čínské věty o zbytcích}.
+                Jeho konkrétní implementace je uvedena v příloze této práce.
+
+                % RSA... 39-40
+                Pokud je faktorizace~(\ref{eq:factorization}) dána, časová složitost Silver-Pohlig-Hellmanova algoritmu je
+
+                    \begin{equation}\label{eq:sph-complexity}
+                        O(\sum_{i=1}^r a_j(\ln{n} + \sqrt{q_{max}})) = O(\sqrt{q_{max}} \cdot \ln{n}),
+                        \footnote{Předpokládáme, že operaci násobení v grupě provádíme v konstantním čase. Přesná časová složitost
+                        samozřejmě vždy závisí na konkrétní implementaci.}
+                    \end{equation}
+                
+                kde hodnota $q_{max}$ značí největší prvočíslo, které dělí $n$.
+
+                \bigskip
+                
+                \noindent   Ze složitosti~(\ref{eq:sph-complexity}) získáváme několik důležitých faktů.
+
+                \begin{theorem}\label{the:sph-complexity}
+                    Složitost výpočtu diskrétního logaritmu v cyklické grupě řádu $n$ je dána velikostí největšího prvočísla, které dělí $n$.
+                \end{theorem}
+
+                Tato věta jasně určuje, v jakých grupách platí předpoklad diskrétního logaritmu (viz~\ref{def:discrete-log-assumption}).
+
+                \begin{consequence}
+                    Aby platil předpoklad diskrétního logaritmu v grupě $\mathbb{G}$, její řád musí mít alespoň
+                    jednoho velkého prvočíselného dělitele.
+                \end{consequence}
+
+                Pokud bychom například chtěli spočítat diskrétní logaritmus v grupě $\mathbb{G}$ s řádem $n = 2^l$, bude
+                nám stačit provést $O(\ln{n})$ násobení v grupě.
+
+                \medskip
+
+                Kdyby se tedy například Alice s Bobem u D-H výměny klíčů domluvili na prvočísle $p$ ve tvaru $p = 2^l + 1$,
+                Evě by pro prolomení celé komunikace stačilo spočítat diskrétní logaritmus v grupě $\mathbb{Z}^*_p$.
+                Grupa $\mathbb{Z}^*_p$ by v tomto případě byla řádu $2^l$.
+                Výpočet diskrétního logaritmu (a tedy i získání tajného klíče $k$) by tedy pro Evu byl snadný úkol. 
+
+
+                \begin{remark}[Zefektivnění protokolu D-H]\label{rem:diffie-hellman-improved}
+                    
+                    Složitost Silver-Pohlig-Hellmanova algoritmu také dává návod pro zefektivnění D-H protokolu.
+                    Namísto spuštění D-H protokolu v celé grupě $\mathbb{Z}^*_p$ stačí protokol spustit
+                    v podgrupě $\mathbb{G}_{q_{max}}$ řádu $q_{max}$.
+                
+                    Dle Věty~\ref{the:sph-complexity} takovéto omezení bude mít pouze zanedbatelný vliv na bezpečnost protokolu.
+
+                    Alici i Bobovi tímto omezením zmenšíme množinu exponentů, ze kterých budou vybírat své tajné klíče.
+
+                \end{remark}
 
 
         \subsection{Kvantové útoky na DLP}
+
 
             [TODO]
     
@@ -821,6 +889,8 @@
     
 \part{Asymetrické šifrování}\label{public-key}
 
+% Graduate Course... 403 RSA
+% Graduate Course... 696 attacks on RSA
 
 
 \end{document}

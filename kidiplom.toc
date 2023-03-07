@@ -13,8 +13,9 @@
 \contentsline {section}{\numberline {6}Problém diskrétního logaritmu}{16}{section.6}%
 \contentsline {subsection}{\numberline {6.1}Obtížnost DLP}{17}{subsection.6.1}%
 \contentsline {subsection}{\numberline {6.2}Výpočet diskrétního logaritmu}{17}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}Hrubá síla}{17}{subsection.6.3}%
-\contentsline {subsection}{\numberline {6.4}Silver-Pohlig-Hellmanův algoritmus}{18}{subsection.6.4}%
-\contentsline {subsection}{\numberline {6.5}Kvantové útoky na DLP}{19}{subsection.6.5}%
-\contentsline {section}{\numberline {7}Napadení protokolu D-H trochu jinak}{19}{section.7}%
-\contentsline {part}{III\hspace {1em}Asymetrické šifrování}{21}{part.3}%
+\contentsline {subsubsection}{\numberline {6.2.1}Hrubá síla}{17}{subsubsection.6.2.1}%
+\contentsline {subsubsection}{\numberline {6.2.2}Rekurzivní algoritmus}{18}{subsubsection.6.2.2}%
+\contentsline {subsubsection}{\numberline {6.2.3}Silver-Pohlig-Hellmanův algoritmus}{18}{subsubsection.6.2.3}%
+\contentsline {subsection}{\numberline {6.3}Kvantové útoky na DLP}{20}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Napadení protokolu D-H trochu jinak}{20}{section.7}%
+\contentsline {part}{III\hspace {1em}Asymetrické šifrování}{22}{part.3}%
