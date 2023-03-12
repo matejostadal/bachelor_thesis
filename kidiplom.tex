@@ -86,10 +86,19 @@
     Základní způsob úpravy zprávy budeme nazývat \emph{šifrování}. Proces úpravy zprávy $m$ na $c$
     budeme nazývat \emph{zašifrování} a proces úpravy $c$ zpět na $m$ \emph{dešifrování}.
 
+
 \newpage
+
+
 \part{Symetrické šifrování}\label{private-key}
+
+
     Symetrické šifrování je způsob šifrování, ve kterém je v procesu zašifrování zprávy použit
-    stejný klíč \emph{k}, jako v procesu dešifrování.\footnote{Písmeno $k$ opět používáno kvůli anglickému \emph{key}.}
+    stejný klíč \emph{k}\footnote{Písmeno $k$ opět používáno kvůli anglickému \emph{key}.}, jako v procesu dešifrování.
+    \footnote{Místo názvu \emph{symetrické šifrování} se často používá
+    název \emph{šifrování se soukromým (tajným) klíčem} (anglicky \emph{private-key cryptography}).}
+    
+    \footnote{Písmeno $k$ opět používáno kvůli anglickému \emph{key}.}
 
     % citace z Graduate Course ...
 
@@ -179,6 +188,8 @@
 
 
 \section{Caesarova šifra}
+
+
     Caesarova šifra $\mathcal{E}$ spadá do kategorie substitučních šifer.\footnote{Substituční šifra je druh šifry, při kterém dochází k záměně
     množiny symbolů za jinou množinu symbolů podle daného klíče.}
     $\mathcal{E}$ je definovaná nad $(\mathbb{N}_0,\Sigma^L,\Sigma^L)$, kde $\Sigma$
@@ -211,6 +222,7 @@
     aniž bychom jakkoliv změnili počet možností zašifrování zprávy $m$.
     Pro abecedu $\Sigma$ tedy obecně existuje $|\Sigma|$ klíčů, které zprávu $m$ zašifrují unikátním způsobem.\footnote{Krajní případ, kdy $m = c$
     uznáme jako platný, ikdyž by zřejmě nebyl prakticky využitelný.}
+
 
     \subsection{Bezpečnost Caesarovy šifry}
 
@@ -889,8 +901,129 @@
     
 \part{Asymetrické šifrování}\label{public-key}
 
-% Graduate Course... 403 RSA
-% Graduate Course... 696 attacks on RSA
+    % Graduate Course... 403 RSA
+    % Graduate Course... 696 attacks on RSA
+
+    % RSA and Public Key... 71 a dál
+        
+    Asymetrické šifrování je způsob šifrování, ve kterém je v procesu zašifrování zprávy použit odlišný klíč, než při procesu dešifrování.
+
+    Podobně jako v části~\ref{private-key} budeme hledat řešení základního problému uvedeného v části~\ref{introduction}.
+    Později navíc představíme systémy, které budou odolné také proti silnějšímu protivníkovi Mallorymu.
+
+    Nejprve uveďme definici asymetrické šifry.
+
+    \medskip
+
+    \begin{itemize}
+        \item
+            $E$ je pravděpodobnostní algoritmus zašifrování.
+            $E$ přijímá na vstupu klíč $k$ a zprávu $m$.
+            Jako výstup vrací zašifrovaný text $c$.
+
+            \begin{center}
+                $E: \mathcal{K} \times \mathcal{M} \rightarrow \mathcal{C}$,
+            \end{center}
+
+            kde $\mathcal{K}$ je množina klíčů, $\mathcal{M}$ je množina zpráv a 
+            $\mathcal{C}$ je množina šifrovaných zpráv.
+
+        \item
+            $D$ je deterministický algoritmus dešifrování. $D$ přijímá na vstupu klíč $k$ a zašifrovaný text $c$.
+            Jako výstup vrací dešifrovanou zprávu $m$.
+            
+            \begin{center}
+                $D: \mathcal{K} \times \mathcal{C} \rightarrow \mathcal{M}$
+            \end{center}
+
+    \end{itemize}
+
+    Každá $\mathcal{E}$ je tedy definována nad $(\mathcal{K},\mathcal{M},\mathcal{C})$.
+
+    Podobně jako u symetrické šifry označme množinu zpráv $\mathcal{M}$, a množinu šifrovaných zpráv $\mathcal{C}$.
+    Každá $\mathcal{E}$ je definována nad $(\mathcal{M},\mathcal{C})$.
+
+    Stejně jako u symetrického šifrování budeme požadovat, aby byl Bob dešifrováním $c$ schopen získat stejnou zprávu $m$, kterou mu Alice poslala.
+    Bude tedy muset platit \emph{podmínka korektnosti}.
+
+    \begin{center}
+        $D(k_s, E(k_p, m))=m$
+    \end{center}
+
+
+    \begin{remark}
+        Všimněme si rozdílu oproti podmínce korektnosti u symetrického šifrování.
+        Rozdíl přímo vyplývá z definice asymetrického šifrování.
+    \end{remark}
+
+
+    \subsection{Volba algoritmů zašifrování a dešifrování}
+
+
+        % todo proč je E pravdepodobnostni a D deterministickej
+
+
+\section{Klíčový pár}\label{sec:key-pair}
+
+
+    Dvojici klíčů $k_s$ (soukromý klíč) a $k_p$ (veřejný klíč), které zaručují splnění podmínky korektnosti budeme říkat \emph{klíčový pár}.
+    \footnote{Indexy $s$ a $p$ jsou z angl. \emph{secret} a \emph{public}.}
+
+    Už pojmenování klíčů nám říká, že $k_s$ bude chtít uživatel udržet v tajnosti a $k_p$ bude moct veřejně sdělit.
+
+    \medskip
+
+    Průběh poslání zprávy by tedy mohl vypadat následovně:
+
+    \begin{itemize}
+        \item
+            Bob vygeneruje svůj klíčový pár $k_s$ a $k_p$.
+            Soukromý klíč si uchová v tajnosti a veřejný klíč zveřejní. Například jej nahraje na internet, případně jej Alici pošle po síti.
+        \item
+            Alice pomocí $k_p$ zašifruje zprávu $m$ na $c=E(k_p, m)$ a $c$ pošle po síti Bobovi.
+        \item 
+            Bob s použitím svého soukromého klíče spočítá $D(k_s, c)$ a získá původní zprávu $m$.
+    \end{itemize}
+
+    Jelikož je Bobův veřejný klíč $k_p$ zpřístupněn všem uživatelům v síti, každý uživatel může pomocí něj zašifrovat zprávu a poslat ji Bobovi.
+    Bezpečnost celého systému se potom opírá o fakt, že šifrovaná zpráva lze dešifrovat pouze pomocí soukromého klíče $k_s$.
+    A jelikož si Bob svůj soukromý klíč uchoval v tajnosti, bude šifrované zprávy moct dešifrovat pouze on.
+
+    \begin{remark}
+        Opět si všimněme rozdílu oproti symetrickému šifrování.
+        U něj měl každý, kdo mohl zprávy zašifrovat, možnost zprávy také dešifrovat (stejným klíčem).
+    \end{remark}
+
+    To, že dešifrování zprávy může provést vlastník soukromého klíče $k_s$ nám již poskytuje základní úroveň bezpečnosti.
+    Oproti symetrickému šifrování, nemusela proběhnout žádná domluva mezi Alicí a Bobem.
+    Soukromý klíč (ani žádná informace o něm) přes síť nebyl poslán. Tím přirozeně snižujeme riziko, že jej někdo odhalí.
+
+    Zároveň, pokud bude libovolný jiný uživatel v síti, Carlos, chtít poslat zprávu Bobovi, nebude se s Bobem muset na ničem domlouvat.
+    Pouze použije volně přístupný veřejný klíč $k_p$ k zašifrování zprávy, kterou pošle Bobovi.
+    Carlos bude nevíc mít jistotu, že zprávu zpětně dešifruje pouze vlastník soukromého klíče $k_s$, tedy Bob.
+    \footnote{Místo názvu \emph{asymetrické šifrování} se často používá
+    název \emph{šifrování s veřejným klíčem} (anglicky \emph{public-key cryptography}).}
+
+
+    \subsection{Volba klíčového páru}
+
+
+        % todo podminky pro páry prirozene
+    
+
+\section{Prvočíselnost}\label{sec:primality}
+    % todo motivace asi az na konec jako modularni aritmetika
+
+
+\section{RSA}\label{sec:RSA}
+
+    \subsection{Bezpečnost RSA}\label{sub:RSA-security}
+
+
+\section{Digitální podpisy}\label{sec:digital-signatures}
+
+
+
 
 
 \end{document}
