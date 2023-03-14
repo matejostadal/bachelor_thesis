@@ -450,7 +450,7 @@
 
 \section{Modulární aritmetika}\label{sec:modular-arithmetic}
 
-    [Obsah doplním následně po DH a RSA dle použitého obsahu, kterému tuto kapitolu přizpůsobím.
+    [Obsah doplním následně dle použitého obsahu, kterému tuto kapitolu přizpůsobím.
     Případně věty rozdělím přímo ke kapitolám, u kterých jsou využity.]
 
     V této kapitole uvedeme několik definic a vět, které nám pomůžou v dalších pasážích tohoto textu.
@@ -1098,7 +1098,7 @@
     Dvojici klíčů $k_s$ (soukromý klíč) a $k_p$ (veřejný klíč), které zaručují splnění podmínky korektnosti budeme říkat \emph{klíčový pár}.
     \footnote{Indexy $s$ a $p$ jsou z angl. \emph{secret} a \emph{public}.}
 
-    Už pojmenování klíčů nám říká, že $k_s$ bude chtít uživatel udržet v tajnosti a $k_p$ bude moct veřejně sdělit.
+    Už pojmenování klíčů samotné nám říká, že $k_s$ bude chtít uživatel udržet v tajnosti a $k_p$ bude moct veřejně sdělit.
 
     \medskip
 
@@ -1107,7 +1107,8 @@
     \begin{itemize}
         \item
             Bob vygeneruje svůj klíčový pár $k_s$ a $k_p$.
-            Soukromý klíč si uchová v tajnosti a veřejný klíč zveřejní. Například jej nahraje na internet, případně jej Alici pošle po síti.
+            Soukromý klíč si uchová v tajnosti a veřejný klíč nahraje do databáze.\footnote{Nahráním klíče $k_p$ do databáze budeme chápat
+            jeho zveřejnění a zpřístupnění všem uživatelům v síti. Bob by ho mohl případně nahrát na internet, nebo jej Alici poslat přímo po síti.}
         \item
             Alice pomocí $k_p$ zašifruje zprávu $m$ na $c=E(k_p, m)$ a $c$ pošle po síti Bobovi.
         \item 
@@ -1135,7 +1136,7 @@
 
     Oproti symetrickému šifrování ale Bob vygenerováním svého klíčového páru nezajistí obousměrnou komunikaci.
     Pokud bude Alice chtít přijímat zprávy od Boba, musí si vygenerovat svůj vlastní klíčový pár.
-    Podobně jako Bob svůj veřejný klíč zveřejní a svůj soukromý klíč uchová v tajnosti.
+    Podobně jako Bob svůj veřejný klíč nahraje do databáze a svůj soukromý klíč uchová v tajnosti.
 
 
     \subsection{Volba klíčového páru}
@@ -1148,6 +1149,44 @@
         Každý by si totiž mohl z volně přístupného veřejného klíče $k_p$ vypočítat soukromý klíč $k_s$.
 
 
+\section{Prvočíselnost}\label{sec:primality}
+
+    % todo motivace asi az na konec jako modularni aritmetika
+
+    [Obsah doplním následně dle použitého obsahu, kterému tuto kapitolu přizpůsobím.
+    Případně věty rozdělím přímo ke kapitolám, u kterých jsou využity.]
+
+    Než se dostaneme ke konkrétním metodám a protokolům využívajících asymetrické šifrování, podíváme se na několik vlastností prvočísel.
+    Uvedeme také několik věcí, které s prvočíselností úzce souvisí.
+
+    Poznatků získaných v této kapitole využijeme v kapitolách následujících.
+    Na některé z nich budeme přímo odkazovat.
+
+    U čtenáře předpokládáme základní znalosti teorie čísel, kongruence modulo $n$ a dělitelnosti.
+
+
+    % Euler
+
+    \begin{definition}
+        Eulerova funkce $\varphi: \mathbb{N} \rightarrow \mathbb{N}$ přiřazuje každému přirozenému číslu $n$
+        počet přirozených čísel menších nebo rovno $n$, která jsou s $n$ nesoudělná, tedy
+
+        \begin{center}
+            $\varphi(n) = |K|$, kde $K = \{k \in \mathbb{N} \mid k \leq n; NSD(k,n)=1\}$.
+        \end{center}
+
+    \end{definition}
+
+    \begin{theorem}\label{the:euler-function-primes}
+        Pro prvočíslo $p$ platí, že $\varphi(p) = p-1$.
+    \end{theorem}
+
+
+    \subsection{Faktorizace}
+
+
+
+
 \section{RSA}\label{sec:RSA}
 
     % RSA and Public Key... 60 - 66 = RSA
@@ -1155,22 +1194,71 @@
 
     % Graduate Course... 403 RSA
     % Graduate Course... 696 attacks on RSA
+    
 
     Nejznámější protokol založený na asymetrickém šifrování je protokol RSA pojmenovaný po jeho autorech.
     Těmi byli Ronald L. Rivest, Adi Shamir a Leonard Adleman.
 
+    \medskip
+
+    Protokol rozdělíme do dvou částí. První částí bude generování klíčového páru.
+    Tou druhou samotné šifrování zpráv.
+
+    \medskip
+
+    Předpokládejme, že Alice chce poslat zprávu přes síť Bobovi.
+    Nebudeme řešit navázání obousměrné komunikace.
 
 
+    \subsection{Generování klíčového páru pro RSA}
+
+        \begin{enumerate}
+            \item 
+                Bob náhodně vygeneruje dvě velká prvočísla $p,q$ taková, že $p \neq q$ a $p$ a $q$ jsou přibližně stejně velká.
+            \item
+                Bob vypočítá $n=pq$ a $\varphi(n)$. Z Věty~\ref{the:euler-function-primes} plyne, že
+                
+                \begin{center}
+                    $\varphi(n) = (p-1)(q-1)$.
+                \end{center}
+            \item
+                Následně náhodně vybere přirozené číslo $e$ takové, že $1 < e < \varphi(n)$ a $NSD(e, \varphi(n)) = 1$.
+            \item
+                Vypočítá unikátní $d \in \mathbb{N}$ takové, že $1 < e < \varphi(n)$ a zároveň
+
+                \begin{center}
+                    $ed \equiv 1 \pmod{\varphi(n)}$.
+                \end{center}
+        \end{enumerate}
+
+        Bobovým veřejným klíčem $k_p$ je dvojice $(n, e)$. Tu Bob nahraje do databáze.
+        Soukromým klíčem $k_s$ je $d$. Soukromý klíč stejně jako čísla $p, q$ a $\varphi(n)$ uchová Bob v tajnosti.
 
 
+    \subsection{Šifrování založené na RSA}
+
+        Pro zjednodušení procesu šifrování založeného na RSA předpokládejme, že zpráva $m$ je číslo $m < n$.
+        Dále nechť $\mathcal{M} = \mathcal{C} = \mathbb{Z}/n\mathbb{Z}$ a $NSD(m, n) = 1$.
+
+        \subsubsection{Zašifrování v RSA}
+            \begin{enumerate}
+                \item 
+                    Alice z databáze získá Bobův veřejný klíč $(n,e)$.
+                \item
+                    Zprávu $m$ zašifruje na $c$ tak, že $c \equiv m^e \pmod{n}$.
+                \item    
+                    Následně pošle $c$ Bobovi.
+            \end{enumerate}
+
+        \subsubsection{Dešifrování v RSA}
+            Bob může po přijetí $c$ snadno získat původní zprávu $m$ díky soukromému klíči $d$, protože $m \equiv c^d \pmod{n}$.
+            
 
     \subsection{Bezpečnost RSA}\label{sub:RSA-security}
 
 
 
-\section{Prvočíselnost}\label{sec:primality}
 
-    % todo motivace asi az na konec jako modularni aritmetika
 
 
 
