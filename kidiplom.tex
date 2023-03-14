@@ -50,6 +50,7 @@
 
 \part{Úvod}\label{introduction}
 
+
     % todo inspirace A Graduate Course (projít shodu a parafrázovat)
 
     V celé práci budeme hledat různá řešení následujícího problému:
@@ -69,9 +70,11 @@
     Alice s Bobem využívají toho, že Eva neví jakým způsobem byla $m$ upravena na $c$, a tudíž nemá jak získat $m$.
 
     \medskip
+
     Tomu, co myslíme tím, že je zpráva upravována, se budeme věnovat dále.
 
     \bigskip
+
     Pro zjednodušení budeme nyní předpokládat následující:
 
     \begin{itemize}
@@ -96,9 +99,7 @@
     Symetrické šifrování je způsob šifrování, ve kterém je v procesu zašifrování zprávy použit
     stejný klíč \emph{k}\footnote{Písmeno $k$ opět používáno kvůli anglickému \emph{key}.}, jako v procesu dešifrování.
     \footnote{Místo názvu \emph{symetrické šifrování} se často používá
-    název \emph{šifrování se soukromým (tajným) klíčem} (anglicky \emph{private-key cryptography}).}
-    
-    \footnote{Písmeno $k$ opět používáno kvůli anglickému \emph{key}.}
+    název \emph{šifrování se tajným klíčem} (anglicky \emph{secret-key cryptography}).}
 
     % citace z Graduate Course ...
 
@@ -188,7 +189,6 @@
 
 
 \section{Caesarova šifra}
-
 
     Caesarova šifra $\mathcal{E}$ spadá do kategorie substitučních šifer.\footnote{Substituční šifra je druh šifry, při kterém dochází k záměně
     množiny symbolů za jinou množinu symbolů podle daného klíče.}
@@ -298,6 +298,7 @@
     (symbol $\oplus$ značí operaci XOR aplikovanou po bitech)
 
     \bigskip
+
     Obě verze šifry zřejmě splňují \emph{podmínku korektnosti} (u binární varianty si stačí uvědomit, že $x \oplus x = 0^L$ pro každé $x \in \{0,1\}^L$).
 
 
@@ -329,65 +330,122 @@
         dešifrovat každou zprávu, která komunikací prošla.
     \end{remark}
 
-    \subsection*{Dokonalé zabezpečení}
-    Jako zlatý standard, nebo ideál bezpečnosti se uvádí takzvané \emph{dokonalé zabezpečení}.\footnote{V anglicky psané
-    literatuře se nejčastěji používá pojem \emph{perfect security}.}
 
-    % [citace z Graduate Course ... str. 8, Def 2.1]
+    \subsection{Dokonalé zabezpečení}\label{sub:perfect-security}
 
-    \begin{definition}
-        Dokonalé zabezpečení
+        Jako zlatý standard, nebo ideál bezpečnosti se uvádí takzvané \emph{dokonalé zabezpečení}.\footnote{V anglicky psané
+        literatuře se nejčastěji používá pojem \emph{perfect security}.}
 
-        Nechť $\mathcal{E}=(E, D)$ je šifra definovaná nad trojicí $(\mathcal{K},\mathcal{M},\mathcal{C})$.
-        Uvažujme pravděpodobnostní experiment, ve kterém je náhodná proměnná $\textbf{k}$ rovnoměrně rozdělena na $\mathcal{K}$.
-        Pokud pro každé $m_0, m_1 \in \mathcal{M}$, a každé $c \in \mathcal{C}$ platí:
+        % [citace z Graduate Course ... str. 8, Def 2.1]
+
+        \begin{definition}
+            Dokonalé zabezpečení
+
+            Nechť $\mathcal{E}=(E, D)$ je šifra definovaná nad trojicí $(\mathcal{K},\mathcal{M},\mathcal{C})$.
+            Uvažujme pravděpodobnostní experiment, ve kterém je náhodná proměnná $\textbf{k}$ rovnoměrně rozdělena na $\mathcal{K}$.
+            Pokud pro každé $m_0, m_1 \in \mathcal{M}$, a každé $c \in \mathcal{C}$ platí:
+
+            \medskip
+            $\Pr[E(\textbf{k},m_0) = c] = \Pr[E(\textbf{k},m_1) = c]$
+
+            \medskip
+            nazýváme $\mathcal{E}$ dokonale bezpečnou šifrou.
+        \end{definition}
+
+        Za předpokladu, že $\mathcal{E}$ je dokonale bezpečná a že každý klíč $k$ má stejnou pravděpodobnost
+        výběru z $\mathcal{K}$ lze ukázat, že zpráva $c = E(k, m)$ bude nezávislá na $m$, což jak víme, je žádoucí.
+
+        %[přesně citace? z Graduate Course ... str. 11, The 2.4]
+
+        \begin{theorem}
+            Vernamova šifra šifra je dokonale bezpečná.
+        \end{theorem}
+
+        %[citace z Graduate Course ... str. 9, The 2.2]
 
         \medskip
-        $\Pr[E(\textbf{k},m_0) = c] = \Pr[E(\textbf{k},m_1) = c]$
-
-        \medskip
-        nazýváme $\mathcal{E}$ dokonale bezpečnou šifrou.
-    \end{definition}
-
-    Za předpokladu, že $\mathcal{E}$ je dokonale bezpečná a že každý klíč $k$ má stejnou pravděpodobnost
-    výběru z $\mathcal{K}$ lze ukázat, že zpráva $c = E(k, m)$ bude nezávislá na $m$, což jak víme, je žádoucí.
-
-    %[přesně citace? z Graduate Course ... str. 11, The 2.4]
-
-    \begin{theorem}
-        Vernamova šifra šifra je dokonale bezpečná.
-    \end{theorem}
-
-    %[citace z Graduate Course ... str. 9, The 2.2]
-
-    \medskip
-    
-    Když tedy máme šifru, která je dokonale bezpečná, k čemu potřebujeme šifry ostatní? Důvodem je praxe.
-
-    Prvním problémem je dokonale náhodný výběr klíče. Současné generátory nejsou dokonale náhodné, ale pouze pseudonáhodné.
-    To nám ale pro potřeby bezpečnosti nestačí. (Eva by mohla využít pseudonáhodnosti k snazšímu uhádnutí klíče.)
-
-    Tím druhým je paměťová náročnost. Pokud by si Alice s Bobem chtěli například poslat zprávu $m$ o velikosti 1 GB, museli by být předem
-    domluveni na klíči $k$ stejné velikosti. Museli by tedy mít $k$ uložený někde v paměti. Vzhledem k tomu, že by
-    pro každou zprávu Alice s Bobem potřebovali nový klíč, není nutnost takové velikosti vhodná.
-
-    Následující věta nám ukazuje, že pokud chceme dosáhnout dokonalé bezpečnosti, musíme volit klíče alespoň stejné
-    velikosti, jako jsou jimi šifrované zprávy. Tedy nedokážeme najít „stejně bezpečnou“ šifru, která by
-    využívala klíče efektivněji než Vernamova šifra.
-
-    \begin{theorem}[Shannonova věta]
         
-        Nechť $\mathcal{E}  = (E, D)$ je šifra definovaná nad $(\mathcal{K},\mathcal{M},\mathcal{C})$.
-        Je-li $\mathcal{E}$ dokonale bezpečná, potom $|\mathcal{K}| \geq |\mathcal{M}|$.
-    \end{theorem}
+        Když tedy máme šifru, která je dokonale bezpečná, k čemu potřebujeme šifry ostatní? Důvodem je praxe.
 
-    %[citace z Graduate Course ... str. 12, The 2.5]
+        Prvním problémem je dokonale náhodný výběr klíče. Současné generátory nejsou dokonale náhodné, ale pouze pseudonáhodné.
+        To nám ale pro potřeby bezpečnosti nestačí. (Eva by mohla využít pseudonáhodnosti k snazšímu uhádnutí klíče.)
 
-    \medskip
+        Tím druhým je paměťová náročnost. Pokud by si Alice s Bobem chtěli například poslat zprávu $m$ o velikosti 1 GB, museli by být předem
+        domluveni na klíči $k$ stejné velikosti. Museli by tedy mít $k$ uložený někde v paměti. Vzhledem k tomu, že by
+        pro každou zprávu Alice s Bobem potřebovali nový klíč, není nutnost takové velikosti vhodná.
 
-    Díky předchozí větě můžeme snadno tvrdit, že Caesarova šifra není dokonale bezpečná.
+        Následující věta nám ukazuje, že pokud chceme dosáhnout dokonalé bezpečnosti, musíme volit klíče alespoň stejné
+        velikosti, jako jsou jimi šifrované zprávy. Tedy nedokážeme najít „stejně bezpečnou“ šifru, která by
+        využívala klíče efektivněji než Vernamova šifra.
 
-    Zejména kvůli těmto dvěma problémům se v praxi vzdáváme jisté míry bezpečnosti za cenu toho, že jsme schopni zprávy šifrovat efektivněji.
+        \begin{theorem}[Shannonova věta]
+            
+            Nechť $\mathcal{E}  = (E, D)$ je šifra definovaná nad $(\mathcal{K},\mathcal{M},\mathcal{C})$.
+            Je-li $\mathcal{E}$ dokonale bezpečná, potom $|\mathcal{K}| \geq |\mathcal{M}|$.
+        \end{theorem}
+
+        %[citace z Graduate Course ... str. 12, The 2.5]
+
+        \medskip
+
+        Díky předchozí větě můžeme snadno tvrdit, že Caesarova šifra není dokonale bezpečná.
+
+        Zejména kvůli těmto dvěma problémům se v praxi vzdáváme jisté míry bezpečnosti za cenu toho, že jsme schopni zprávy šifrovat efektivněji.
+
+
+    % citace 2023... kompletne komentar semanticka bezpecnost 1
+    \subsection{Sémantické zabezpečení}\label{sub:semantic-security-private}
+
+        Nižší úrovní zabezpečení, která je ale oproti dokonalému zabezpečení prakticky udržitelná, je \emph{sémantické zabezpečení}.        
+        Uveďme formální definici, která se nejsnáze vede přes tzv. Attack Game.\footnote{[todo attack game]}
+
+        \begin{definition}[Attack Game sémantické bezpečnosti]
+            
+            Nechť $\mathcal{E}  = (E, D)$ je šifra definovaná nad $(\mathcal{K},\mathcal{M},\mathcal{C})$.
+            Pro protivníka $\mathcal{A}$ definujeme dva experimenty. Pro $b = 0, 1$ definujeme
+
+            \medskip
+
+            \textbf{Experiment} $b$:
+
+            \begin{itemize}
+                \item 
+                    Protivník $\mathcal{A}$ vybere zprávy $m_0, m_1 \in \mathcal{M}$, které mají stejnou délku a pošle je vyzyvateli.
+                \item
+                    Vyzyvatel náhodně vybere $k \in \mathcal{K}$ a vypočítá $c = E(k, m_b)$.
+                    Zašifrovanou zprávu $c$ pošle protivníkovi $\mathcal{A}$.
+                \item
+                    Protivník $\mathcal{A}$ vydá bit $\hat{b} \in {0,1}$.
+            \end{itemize}
+
+            Pro $b = 0, 1$ označme $W_b$ jev, kdy $\mathcal{A}$ vydá 1 v Experimentu $b$.
+            Výhodu sémantického zabezpečení protivníka $\mathcal{A}$ proti $\mathcal{E}$ definujeme jako
+
+            \begin{center}
+                $SSadv[\mathcal{A}, \mathcal{E}] = \left\lvert\Pr[W_0] - \Pr[W_1]\right\rvert$.
+            \end{center}
+
+        \end{definition}
+
+        \begin{remark}
+            Jevy $W_0$ a $W_1$ (a jejich pravděpodobnost) jsou jistě ovlivněny náhodným výběrem $k$.
+            Případně také náhodností využité ve funkci zašifrování $E$.
+        \end{remark}
+
+        \begin{definition}[Sémantické zabezpečení]
+            Šifra $\mathcal{E}$ je sémanticky bezpečná, pokud pro libovolného výkonného protivníka $\mathcal{A}$
+            je hodnota $SSadv[\mathcal{A}, \mathcal{E}]$ zanedbatelná.
+        \end{definition}
+
+
+        Pro úplnost bychom měli uvést, co přesně myslíme výrazy \emph{výkonný protivník} a \emph{zanedbatelná}.
+        \emph{Výkonný protivník} pro nás bude protivník, který pracuje v rozumném výpočetním čase.
+        \emph{Zanedbatelná} hontota pro nás bude taková hodnota, která lze prakticky považovat za nulu (například hodtota $10^{-1000}$).
+
+
+        To, že je šifra $\mathcal{E}  = (E, D)$ sémanticky bezpečná tedy zajišťuje, že Eva jako protivník v síti
+        bez znalosti klíče $k$ nerozezná dvě zprávy stejné délky $m_0, m_1$, které byly funkcí $E$ pomocí $k$.
+        Zajišťuje tedy, že šifrovaná zpráva $c$ Evě nedává žádnou informaci o původní zprávě $m$.
 
 
 \section{Modulární aritmetika}\label{sec:modular-arithmetic}
@@ -558,7 +616,7 @@
         Alice a Bob se nejprve musí domluvit na velkém prvočísle $p$ (to bude určovat potřebnou konečnou doménu).
         Prvočíslo $p$ by mělo být alespoň 2048 bitů dlouhé.
         Zároveň by mělo platit, že existuje prvočíslo $q$ (alespoň 256 bitů dlouhé), které dělí $p-1$.
-        K tomu, proč je existence $q$ důležitá se budeme věnovat v podkapitole~\ref{sub:silver-pohlig-hellman}.
+        K tomu, proč je existence $q$ důležitá se budeme věnovat v podkapitole~\ref{subsub:silver-pohlig-hellman}.
 
         Pro funkčnost protokolu potřebujeme, aby Alice i Bob znali generátor $g$ grupy $\mathbb{Z}^*_p$ (viz~\ref{def:Z*p}).
         Nalezení generátoru grupy není obecně jednoduchý úkol.
@@ -607,48 +665,46 @@
 
 \section{Problém diskrétního logaritmu}\label{sec:discrete-log}
     
+    V podkapitole~\ref{sub:diffie-hellman-security} jsme představili problém DHP.
+    Úkolem bylo zjistit $g^{\alpha \beta}$ z $g, g^\alpha, g^\beta$ bez znalosti $\alpha$ a $\beta$.
 
-        V podkapitole~\ref{sub:diffie-hellman-security} jsme představili problém DHP.
-        Úkolem bylo zjistit $g^{\alpha \beta}$ z $g, g^\alpha, g^\beta$ bez znalosti $\alpha$ a $\beta$.
+    Pokud bychom byli schopni z $g^\alpha$ efektivně získat $\alpha$ (případně z $g^\beta$ získat $\beta$), uměli bychom také
+    efektivně řešit DHP.
 
-        Pokud bychom byli schopni z $g^\alpha$ efektivně získat $\alpha$ (případně z $g^\beta$ získat $\beta$), uměli bychom také
-        efektivně řešit DHP.
-
-        \begin{definition}[Problém diskrétního logaritmu (DLP)]\label{def:dlp}
-            
-            Nechť $\mathbb{G}$ je cyklická grupa řádu $n$, $g$ její generátor a $x$ libovolný prvek z $\mathbb{G}$.
-
-            Číslo $e \in \mathbb{Z}_n$ takové, že
-
-                \begin{equation}\label{eq:discrete-log}
-                    g^e \equiv x \pmod{n}.
-                \end{equation}
-            
-            nazveme diskrétním logaritmem o základu $g$ z $x$.
-
-            Nalezení takového čísla $e$ budeme nazývat \textbf{problém diskrétního logaritmu}.
-
-        \end{definition}
+    \begin{definition}[Problém diskrétního logaritmu (DLP)]\label{def:dlp}
         
-        Existuje řada grup $\mathbb{G}$, u nichž předpokládáme, že je v nich problém diskrétního logaritmu obtížně řešitelný.
-        Na tomto předpokladu stojí bezpečnost řady šifrovacích protokolů, včetně Diffieho-Hellmanovy výměny klíčů
-        (jak jsme uvedli v podkapitole~\ref{sub:diffie-hellman-security}).
+        Nechť $\mathbb{G}$ je cyklická grupa řádu $n$, $g$ její generátor a $x$ libovolný prvek z $\mathbb{G}$.
 
-        % attack game 10.4 A Graduate Course - 407
+        Číslo $e \in \mathbb{Z}_n$ takové, že
 
-        \begin{definition}[Předpoklad diskrétního logaritmu]\label{def:discrete-log-assumption}
-                        
-            Předpoklad diskrétního logaritmu platí pro cyklickou grupu $\mathbb{G}$, právě tehdy když
-            je pravděpodobnost správného určení diskrétního logaritmu zanedbatelná. 
+            \begin{equation}\label{eq:discrete-log}
+                g^e \equiv x \pmod{n}.
+            \end{equation}
+        
+        nazveme diskrétním logaritmem o základu $g$ z $x$.
 
-        \end{definition}
+        Nalezení takového čísla $e$ budeme nazývat \textbf{problém diskrétního logaritmu}.
 
-        V následujících podkapitolách se zaměříme na volbu grupy $\mathbb{G}$ a vliv jejích
-        vlastností na obtížnost DLP. Předem jen uveďme, že obtížnost DLP je úzce provázána s prvočísly.
+    \end{definition}
+    
+    Existuje řada grup $\mathbb{G}$, u nichž předpokládáme, že je v nich problém diskrétního logaritmu obtížně řešitelný.
+    Na tomto předpokladu stojí bezpečnost řady šifrovacích protokolů, včetně Diffieho-Hellmanovy výměny klíčů
+    (jak jsme uvedli v podkapitole~\ref{sub:diffie-hellman-security}).
+
+    % attack game 10.4 A Graduate Course - 407
+
+    \begin{definition}[Předpoklad diskrétního logaritmu]\label{def:discrete-log-assumption}
+                    
+        Předpoklad diskrétního logaritmu platí pro cyklickou grupu $\mathbb{G}$, právě tehdy když
+        je pravděpodobnost správného určení diskrétního logaritmu zanedbatelná. 
+
+    \end{definition}
+
+    V následujících podkapitolách se zaměříme na volbu grupy $\mathbb{G}$ a vliv jejích
+    vlastností na obtížnost DLP. Předem jen uveďme, že obtížnost DLP je úzce provázána s prvočísly.
 
 
-        \subsection{Obtížnost DLP}\label{sub:discrete-log-complexity}
-
+    \subsection{Obtížnost DLP}\label{sub:discrete-log-complexity}
 
         V současnosti se za vhodnou volbu $\mathbb{G}$ považuje grupa řádu $n=p$, kde
         $p$ je velké prvočíslo (alespoň 2048 bitů dlouhé). Pro $p$ také musí platit, že číslo $p-1$ má alespoň
@@ -669,185 +725,180 @@
         $P$ versus $NP$. Ten patří k nejznámějším otevřeným problémům teoretické informatiky.}
 
 
-        \subsection{Výpočet diskrétního logaritmu}\label{sub:computing-discrete-log}
+    \subsection{Výpočet diskrétního logaritmu}\label{sub:computing-discrete-log}
 
         % Graduate Course... 409, 680-687
 
-            \subsubsection{Hrubá síla}\label{subsub:brute-forcing-discrete-log}
+        \subsubsection{Hrubá síla}\label{subsub:brute-forcing-discrete-log}
 
-
-                Nejjednodušším způsobem k nalezení diskrétního logaritmu je hrubá síla.
-                Algoritmus pracující tímto přístupem jednoduše vyzkouší všechny možné exponenty,
-                dokud nenajde exponent $e$ vyhovující~(\ref{eq:discrete-log}).
-                
-                \begin{kicode}{TeX}{}{Nalezení diskrétního logaritmu hrubou silou}
-                    function brute_force_dlog(base, result, modulus):
-
-                        exponent = 0
-
-                        while result != current_result:
-
-                            current_result = pow(base, exponent, modulus)
-                                            
-                            exponent += 1
+            Nejjednodušším způsobem k nalezení diskrétního logaritmu je hrubá síla.
+            Algoritmus pracující tímto přístupem jednoduše vyzkouší všechny možné exponenty,
+            dokud nenajde exponent $e$ vyhovující~(\ref{eq:discrete-log}).
             
-                \end{kicode}
+            \begin{kicode}{TeX}{}{Nalezení diskrétního logaritmu hrubou silou}
+                function brute_force_dlog(base, result, modulus):
 
-                Takto navržený algoritmus je korektní. V nejhorším případě potřebuje provést $n$ násobení v grupě $\mathbb{G}$.
+                    exponent = 0
 
+                    while result != current_result:
 
-            % A Computational Introduction .... 331    
-            \subsubsection{Rekurzivní algoritmus}\label{subsub:recursive-discrete-log}
-                
+                        current_result = pow(base, exponent, modulus)
+                                        
+                        exponent += 1
+        
+            \end{kicode}
 
-                Nechť $\mathbb{G}$ je grupa řádu $q^y$ s generátorem $g$, kde $q > 1, y \geq 1$.
-                Algoritmus, který v této podkapitole uvedeme, nám umožní redukovat řešení DLP
-                v této grupě na řešení DLP v grupě řádu $q$.
-
-                Nalezení diskrétního logaritmu o základu $g$ z $x$ probíhá rekurzivně.
-
-                \medskip
-
-                Ukončovací podmínkou bude případ, kdy $y = 1$. V tomto případě k výpočtu použijeme
-                algoritmus z podkapitoly~\ref{subsub:brute-forcing-discrete-log}.
-
-                V případě $y > 1$ zvolíme $z = \left\lfloor y/2\right\rfloor$.
-                Diskrétní logaritmus $e$ lze vyjádřit jako $e = q^{z}v + u$, pro $u, v \in \mathbb{N}$, kde $0 \leq u < q^z$ a $ 0 \leq v < q^{y-z}$.
-
-                \medskip
-
-                Potom platí
-                \begin{equation}\label{eq:rdl}
-                    x = g^e = g^{(q^z)v + u} = g^{(q^z)v} \cdot g^u.
-                \end{equation}
-                
-                Umocněním obou stran na $q^{y-z}$ získáme
-
-                \begin{equation}
-                    x^{q^{y-z}} = g^{q^{y-z}u}.
-                    \footnote{Protože $g^{(q^z)v}$ je řádu $q^{y-z}$.
-                    Umocněním tedy dle definice získáme jednotkový prvek, který se vzhledem k násobení chová neutrálně.}
-                \end{equation}
-                
-                Dle Věty~\ref{the:subgroups} platí, že $g^{q^{y-z}}$ je řádu $q^z$.
-                Můžeme tedy rekurzivně spočítat diskrétní logaritmus o základu $g^{q^{y-z}}$ z $x^{q^{y-z}}$.
-                Tímto způsobem můžeme rekurzivně pokračovat, dokud nenarazíme na ukončovací podmínku a nezískáme $u$.
-
-                Vydělením obou stran rovnice~(\ref{eq:rdl}) hodnotou $g^u$ získáme 
-                
-                \begin{equation}
-                    x/g^u = g^{q^{z}v}.
-                \end{equation}
-                
-                Opět z Věty~\ref{the:subgroups} plyne, že $g^{q^z}$ je řádu $q^{y-z}$.
-                Rekurzivně tedy můžeme spočítat diskrétní logaritmus o základu $g^{q^z}$ z $x/g^u$, dokud nezískáme $v$.
-
-                Po získání $u$ a $v$ snadno vypočítáme $x = q^{z}v+u$.
-                
-                \begin{kicode}{TeX}{}{Nalezení diskrétního logaritmu rekurzivním algoritmem}
-                    function recursive_dlog(base, result, q, y, modulus):
-
-                        if y = 1:
-                            return brute_force_dlog(base, result, modulus)
-
-                        z = y / 2
-
-                        pow(base, exponent, modulus)
-
-                        u_base = pow(base, q ** (y-z), modulus)
-                        u_result = pow(result, q ** (y-z), modulus)
-                        u = recursive_dlog(u_base, u_result, q, z, modulus)
+            Takto navržený algoritmus je korektní. V nejhorším případě potřebuje provést $n$ násobení v grupě $\mathbb{G}$.
 
 
-                        v_base = pow(base, q ** z, modulus)
-                        v_result = result / pow(base, u, modulus)
-                        v = recursive_dlog(v_base, v_result, q, y-z, modulus)
-                
-                        return (q ** z) * v + u
-                \end{kicode}
+        % A Computational Introduction .... 331    
+        \subsubsection{Rekurzivní algoritmus}\label{subsub:recursive-discrete-log}
+            
+            Nechť $\mathbb{G}$ je grupa řádu $q^y$ s generátorem $g$, kde $q > 1, y \geq 1$.
+            Algoritmus, který v této podkapitole uvedeme, nám umožní redukovat řešení DLP
+            v této grupě na řešení DLP v grupě řádu $q$.
+
+            Nalezení diskrétního logaritmu o základu $g$ z $x$ probíhá rekurzivně.
+
+            \medskip
+
+            Ukončovací podmínkou bude případ, kdy $y = 1$. V tomto případě k výpočtu použijeme
+            algoritmus z podkapitoly~\ref{subsub:brute-forcing-discrete-log}.
+
+            V případě $y > 1$ zvolíme $z = \left\lfloor y/2\right\rfloor$.
+            Diskrétní logaritmus $e$ lze vyjádřit jako $e = q^{z}v + u$, pro $u, v \in \mathbb{N}$, kde $0 \leq u < q^z$ a $ 0 \leq v < q^{y-z}$.
+
+            \medskip
+
+            Potom platí
+            \begin{equation}\label{eq:rdl}
+                x = g^e = g^{(q^z)v + u} = g^{(q^z)v} \cdot g^u.
+            \end{equation}
+            
+            Umocněním obou stran na $q^{y-z}$ získáme
+
+            \begin{equation}
+                x^{q^{y-z}} = g^{q^{y-z}u}.
+                \footnote{Protože $g^{(q^z)v}$ je řádu $q^{y-z}$.
+                Umocněním tedy dle definice získáme jednotkový prvek, který se vzhledem k násobení chová neutrálně.}
+            \end{equation}
+            
+            Dle Věty~\ref{the:subgroups} platí, že $g^{q^{y-z}}$ je řádu $q^z$.
+            Můžeme tedy rekurzivně spočítat diskrétní logaritmus o základu $g^{q^{y-z}}$ z $x^{q^{y-z}}$.
+            Tímto způsobem můžeme rekurzivně pokračovat, dokud nenarazíme na ukončovací podmínku a nezískáme $u$.
+
+            Vydělením obou stran rovnice~(\ref{eq:rdl}) hodnotou $g^u$ získáme 
+            
+            \begin{equation}
+                x/g^u = g^{q^{z}v}.
+            \end{equation}
+            
+            Opět z Věty~\ref{the:subgroups} plyne, že $g^{q^z}$ je řádu $q^{y-z}$.
+            Rekurzivně tedy můžeme spočítat diskrétní logaritmus o základu $g^{q^z}$ z $x/g^u$, dokud nezískáme $v$.
+
+            Po získání $u$ a $v$ snadno vypočítáme $x = q^{z}v+u$.
+            
+            \begin{kicode}{TeX}{}{Nalezení diskrétního logaritmu rekurzivním algoritmem}
+                function recursive_dlog(base, result, q, y, modulus):
+
+                    if y = 1:
+                        return brute_force_dlog(base, result, modulus)
+
+                    z = y / 2
+
+                    pow(base, exponent, modulus)
+
+                    u_base = pow(base, q ** (y-z), modulus)
+                    u_result = pow(result, q ** (y-z), modulus)
+                    u = recursive_dlog(u_base, u_result, q, z, modulus)
+
+
+                    v_base = pow(base, q ** z, modulus)
+                    v_result = result / pow(base, u, modulus)
+                    v = recursive_dlog(v_base, v_result, q, y-z, modulus)
+            
+                    return (q ** z) * v + u
+            \end{kicode}
 
 
             % Graduate Course 686
             % RSA... 39-40
-            \subsubsection{Silver-Pohlig-Hellmanův algoritmus}\label{subsub:silver-pohlig-hellman}
+        \subsubsection{Silver-Pohlig-Hellmanův algoritmus}\label{subsub:silver-pohlig-hellman}
+
+            Tento algoritmus nám kromě dalšího způsobu řešení problému DLP také ukazuje zajímavý vztah mezi 
+            faktorizací řádu grupy $\mathbb{G}$ a obtížností DLP v ní.            
+
+            \begin{theorem}[Základní věta aritmetiky]\label{the:fta}
+                Každé přirozené číslo větší než jedna lze vyjádřit jednoznačně
+                až na pořadí činitelů jako součin prvočísel.
+            \end{theorem}
+
+            Nechť $n$ je řád grupy $\mathbb{G}$. Pak dle Věty~\ref{the:fta} existuje rozklad
+
+                \begin{equation}\label{eq:factorization}
+                    n=q_1^{e_1} \cdots q_r^{e_r}.
+                \end{equation}
+
+            Algoritmus využívá algoritmu RDL z podkapitoly~\ref{subsub:recursive-discrete-log} a \emph{Čínské věty o zbytcích}.
+            Jeho konkrétní implementace je uvedena v příloze této práce.
+
+            % RSA... 39-40
+            Pokud je faktorizace~(\ref{eq:factorization}) dána, časová složitost Silver-Pohlig-Hellmanova algoritmu je
+
+                \begin{equation}\label{eq:sph-complexity}
+                    O(\sum_{i=1}^r a_j(\ln{n} + \sqrt{q_{max}})) = O(\sqrt{q_{max}} \cdot \ln{n}),
+                    \footnote{Předpokládáme, že operaci násobení v grupě provádíme v konstantním čase. Přesná časová složitost
+                    samozřejmě vždy závisí na konkrétní implementaci.}
+                \end{equation}
+            
+            kde hodnota $q_{max}$ značí největší prvočíslo, které dělí $n$.
+
+            \bigskip
+            
+            \noindent   Ze složitosti~(\ref{eq:sph-complexity}) získáváme několik důležitých faktů.
+
+            \begin{theorem}\label{the:sph-complexity}
+                Složitost výpočtu diskrétního logaritmu v cyklické grupě řádu $n$ je dána velikostí největšího prvočísla, které dělí $n$.
+            \end{theorem}
+
+            Tato věta jasně určuje, v jakých grupách platí předpoklad diskrétního logaritmu (viz~\ref{def:discrete-log-assumption}).
+
+            \begin{consequence}
+                Aby platil předpoklad diskrétního logaritmu v grupě $\mathbb{G}$, její řád musí mít alespoň
+                jednoho velkého prvočíselného dělitele.
+            \end{consequence}
+
+            Pokud bychom například chtěli spočítat diskrétní logaritmus v grupě $\mathbb{G}$ s řádem $n = 2^l$, bude
+            nám stačit provést $O(\ln{n})$ násobení v grupě.
+
+            \medskip
+
+            Kdyby se tedy například Alice s Bobem u D-H výměny klíčů domluvili na prvočísle $p$ ve tvaru $p = 2^l + 1$,
+            Evě by pro prolomení celé komunikace stačilo spočítat diskrétní logaritmus v grupě $\mathbb{Z}^*_p$.
+            Grupa $\mathbb{Z}^*_p$ by v tomto případě byla řádu $2^l$.
+            Výpočet diskrétního logaritmu (a tedy i získání tajného klíče $k$) by tedy pro Evu byl snadný úkol. 
 
 
-                Tento algoritmus nám kromě dalšího způsobu řešení problému DLP také ukazuje zajímavý vztah mezi 
-                faktorizací řádu grupy $\mathbb{G}$ a obtížností DLP v ní.            
-
-                \begin{theorem}[Základní věta aritmetiky]\label{the:fta}
-                    Každé přirozené číslo větší než jedna lze vyjádřit jednoznačně
-                    až na pořadí činitelů jako součin prvočísel.
-                \end{theorem}
-
-                Nechť $n$ je řád grupy $\mathbb{G}$. Pak dle Věty~\ref{the:fta} existuje rozklad
-
-                    \begin{equation}\label{eq:factorization}
-                        n=q_1^{e_1} \cdots q_r^{e_r}.
-                    \end{equation}
-
-                Algoritmus využívá algoritmu RDL z podkapitoly~\ref{subsub:recursive-discrete-log} a \emph{Čínské věty o zbytcích}.
-                Jeho konkrétní implementace je uvedena v příloze této práce.
-
-                % RSA... 39-40
-                Pokud je faktorizace~(\ref{eq:factorization}) dána, časová složitost Silver-Pohlig-Hellmanova algoritmu je
-
-                    \begin{equation}\label{eq:sph-complexity}
-                        O(\sum_{i=1}^r a_j(\ln{n} + \sqrt{q_{max}})) = O(\sqrt{q_{max}} \cdot \ln{n}),
-                        \footnote{Předpokládáme, že operaci násobení v grupě provádíme v konstantním čase. Přesná časová složitost
-                        samozřejmě vždy závisí na konkrétní implementaci.}
-                    \end{equation}
+            \begin{remark}[Zefektivnění protokolu D-H]\label{rem:diffie-hellman-improved}
                 
-                kde hodnota $q_{max}$ značí největší prvočíslo, které dělí $n$.
+                Složitost Silver-Pohlig-Hellmanova algoritmu také dává návod pro zefektivnění D-H protokolu.
+                Namísto spuštění D-H protokolu v celé grupě $\mathbb{Z}^*_p$ stačí protokol spustit
+                v podgrupě $\mathbb{G}_{q_{max}}$ řádu $q_{max}$.
+            
+                Dle Věty~\ref{the:sph-complexity} takovéto omezení bude mít pouze zanedbatelný vliv na bezpečnost protokolu.
 
-                \bigskip
-                
-                \noindent   Ze složitosti~(\ref{eq:sph-complexity}) získáváme několik důležitých faktů.
+                Alici i Bobovi tímto omezením zmenšíme množinu exponentů, ze kterých budou vybírat své tajné klíče.
 
-                \begin{theorem}\label{the:sph-complexity}
-                    Složitost výpočtu diskrétního logaritmu v cyklické grupě řádu $n$ je dána velikostí největšího prvočísla, které dělí $n$.
-                \end{theorem}
-
-                Tato věta jasně určuje, v jakých grupách platí předpoklad diskrétního logaritmu (viz~\ref{def:discrete-log-assumption}).
-
-                \begin{consequence}
-                    Aby platil předpoklad diskrétního logaritmu v grupě $\mathbb{G}$, její řád musí mít alespoň
-                    jednoho velkého prvočíselného dělitele.
-                \end{consequence}
-
-                Pokud bychom například chtěli spočítat diskrétní logaritmus v grupě $\mathbb{G}$ s řádem $n = 2^l$, bude
-                nám stačit provést $O(\ln{n})$ násobení v grupě.
-
-                \medskip
-
-                Kdyby se tedy například Alice s Bobem u D-H výměny klíčů domluvili na prvočísle $p$ ve tvaru $p = 2^l + 1$,
-                Evě by pro prolomení celé komunikace stačilo spočítat diskrétní logaritmus v grupě $\mathbb{Z}^*_p$.
-                Grupa $\mathbb{Z}^*_p$ by v tomto případě byla řádu $2^l$.
-                Výpočet diskrétního logaritmu (a tedy i získání tajného klíče $k$) by tedy pro Evu byl snadný úkol. 
+            \end{remark}
 
 
-                \begin{remark}[Zefektivnění protokolu D-H]\label{rem:diffie-hellman-improved}
-                    
-                    Složitost Silver-Pohlig-Hellmanova algoritmu také dává návod pro zefektivnění D-H protokolu.
-                    Namísto spuštění D-H protokolu v celé grupě $\mathbb{Z}^*_p$ stačí protokol spustit
-                    v podgrupě $\mathbb{G}_{q_{max}}$ řádu $q_{max}$.
-                
-                    Dle Věty~\ref{the:sph-complexity} takovéto omezení bude mít pouze zanedbatelný vliv na bezpečnost protokolu.
+    \subsection{Kvantové útoky na DLP}
 
-                    Alici i Bobovi tímto omezením zmenšíme množinu exponentů, ze kterých budou vybírat své tajné klíče.
-
-                \end{remark}
-
-
-        \subsection{Kvantové útoky na DLP}
-
-
-            [TODO]
+        [TODO]
     
 
 
 \section{Napadení protokolu D-H trochu jinak}
-
 
     V části~\ref{introduction} jsme uvedli, že Eva umí komunikaci proudící po síti pouze číst. Eva tedy nemůže zprávy posílat, mazat, ani modifikovat.
     Pokud se v síti nachází protivník, který takové schopnosti má, stává se námi uvedený protokol snadno napadnutelným. Protivníka, který bude mít
@@ -859,52 +910,49 @@
     Ukažme si, jak by Mallory mohl komunikaci mezi Alicí a Bobem jednoduše napadnout.
     Alice s Bobem se chtějí domluvit na tajném klíči $k$ (kterým budou šifrovat zprávy) pomocí protokolu D-H.
 
-        \begin{itemize}
-            \item
-                Alice pošle Bobovi velké prvočíslo $p$.
-                Mallory $p$ zachytí a zapamatuje si ho.
-            \item
-                Alice náhodně vybere (velké) číslo $\alpha \in \mathbb{N}$, vypočítá $A=g^\alpha \mod{p}$ a $A$ pošle po síti Bobovi.
-            \item
-                Mallory zprávu $A$ zachytí a nepošle ji dále Bobovi. Místo toho vybere velké číslo $\gamma \in \mathbb{N}$,
-                vypočítá $C=g^\gamma \mod{p}$ a $C$ pošle po síti Bobovi.
-            \item
-                Bob náhodně vybere (velké) číslo $\beta \in \mathbb{N}$, vypočítá $B=g^\beta \mod{p}$ a $B$ pošle po síti Alici.
-            \item
-                Mallory zprávu $B$ zachytí a nepošle ji Alici. Místo toho Alici pošle $C$.
-            \item
-                Alice vypočítá $k_1=C^\alpha \mod{p}$. Bob vypočítá $k_2=C^\beta \mod{p}$.
-            \item
-                Mallory vypočítá $k_1=A^\gamma \mod{p}$ a $k_2=B^\gamma \mod{p}$.
+    \begin{itemize}
+        \item
+            Alice pošle Bobovi velké prvočíslo $p$.
+            Mallory $p$ zachytí a zapamatuje si ho.
+        \item
+            Alice náhodně vybere (velké) číslo $\alpha \in \mathbb{N}$, vypočítá $A=g^\alpha \mod{p}$ a $A$ pošle po síti Bobovi.
+        \item
+            Mallory zprávu $A$ zachytí a nepošle ji dále Bobovi. Místo toho vybere velké číslo $\gamma \in \mathbb{N}$,
+            vypočítá $C=g^\gamma \mod{p}$ a $C$ pošle po síti Bobovi.
+        \item
+            Bob náhodně vybere (velké) číslo $\beta \in \mathbb{N}$, vypočítá $B=g^\beta \mod{p}$ a $B$ pošle po síti Alici.
+        \item
+            Mallory zprávu $B$ zachytí a nepošle ji Alici. Místo toho Alici pošle $C$.
+        \item
+            Alice vypočítá $k_1=C^\alpha \mod{p}$. Bob vypočítá $k_2=C^\beta \mod{p}$.
+        \item
+            Mallory vypočítá $k_1=A^\gamma \mod{p}$ a $k_2=B^\gamma \mod{p}$.
 
-        \end{itemize}
+    \end{itemize}
 
-        % todo [obrázek]
+    % todo [obrázek]
 
-        Alice a Bob si nyní můžou myslet, že se dohodli na společném klíči, pomocí kterého povedou zabezpečenou komunikaci.
-        Ve skutečnosti bude ale jejich veškerou komunikaci číst (případně měnit) Mallory, aniž by o tom Alice s Bobem věděli.
-        Ukažme si to na příkladu komunikace, která probíhá po výše zmíněné výměně klíče.
+    Alice a Bob si nyní můžou myslet, že se dohodli na společném klíči, pomocí kterého povedou zabezpečenou komunikaci.
+    Ve skutečnosti bude ale jejich veškerou komunikaci číst (případně měnit) Mallory, aniž by o tom Alice s Bobem věděli.
+    Ukažme si to na příkladu komunikace, která probíhá po výše zmíněné výměně klíče.
 
-        Alice pomocí $k_1$ zašifruje zprávu $m$ a pošle $c$ po síti Bobovi. Mallory $c$ zachytí a pomocí $k_1$ ji dešifruje.
-        Zprávu $m$ si nyní může přečíst a kompletně změnit její obsah.
-        Upravenou zprávu $m'$ zašifruje pomocí $k_2$ a $c'$ pošle Bobovi.\footnote{Pokud Mallory zprávy pouze čte, potom zřejmě $m = m'$.}
-        Bob zprávu $c'$ dešifruje pomocí $k_2$.
+    Alice pomocí $k_1$ zašifruje zprávu $m$ a pošle $c$ po síti Bobovi. Mallory $c$ zachytí a pomocí $k_1$ ji dešifruje.
+    Zprávu $m$ si nyní může přečíst a kompletně změnit její obsah.
+    Upravenou zprávu $m'$ zašifruje pomocí $k_2$ a $c'$ pošle Bobovi.\footnote{Pokud Mallory zprávy pouze čte, potom zřejmě $m = m'$.}
+    Bob zprávu $c'$ dešifruje pomocí $k_2$.
 
-        Problém je jistě v autentifikaci zpráv. Alice ani Bob nemají možnost zjistit, že byla zpráva někým upravena.
-        Bob nemá nikdy jistotu, že obdrženou zprávu poslala opravdu Alice (a naopak).
+    Problém je jistě v autentifikaci zpráv. Alice ani Bob nemají možnost zjistit, že byla zpráva někým upravena.
+    Bob nemá nikdy jistotu, že obdrženou zprávu poslala opravdu Alice (a naopak).
 
-        \medskip
+    \medskip
 
-        Šifrovací metody, které autentifikaci zajišťují (a budou tedy komunikaci chránit i před Mallorym), představíme v části~\ref{public-key}.
+    Šifrovací metody, které autentifikaci zajišťují (a budou tedy komunikaci chránit i před Mallorym), představíme v části~\ref{public-key}.
 
     \newpage
     
+
 \part{Asymetrické šifrování}\label{public-key}
 
-    % Graduate Course... 403 RSA
-    % Graduate Course... 696 attacks on RSA
-
-    % RSA and Public Key... 71 a dál
         
     Asymetrické šifrování je způsob šifrování, ve kterém je v procesu zašifrování zprávy použit odlišný klíč, než při procesu dešifrování.
 
@@ -914,6 +962,8 @@
     Nejprve uveďme definici asymetrické šifry.
 
     \medskip
+
+    Asymetrická šifra pro nás bude uspořádaná dvojice $\mathcal{E}  = (E, D)$, kde:
 
     \begin{itemize}
         \item
@@ -957,14 +1007,93 @@
     \end{remark}
 
 
-    \subsection{Volba algoritmů zašifrování a dešifrování}
+% citace 2023... presne semantic security 2 poznamka
+\section{Volba algoritmu zašifrování}
+
+    V popisu asymetrické šifry jsme uvedli, že algoritmus zašifrování $E$ musí být pravděpodobnostní.
+    Ukážeme, že v případě, kdy by $E$ byl deterministický, ztratili bychom záruku sémantického zabezpečení pro šifru $\mathcal{E}$.
+
+    Abychom mohli problém popsat podrobněji, zadefinujme nejprve sémantické zabezpečení pro asymetrickou šifru.
+    Definice se bude v mnohém podobat té v podkapitole~\ref{sub:semantic-security-private}.
+
+    \subsection{Sémantické zabezpečení}\label{sub:semantic-security-public}
+
+        \begin{definition}[Attack Game sémantické bezpečnosti]
+            
+            Nechť $\mathcal{E} = (E, D)$ je šifra definovaná nad $(\mathcal{M},\mathcal{C})$.
+            Pro protivníka $\mathcal{A}$ definujeme dva experimenty. Pro $b = 0, 1$ definujeme
+
+            \medskip
+
+            \textbf{Experiment} $b$:
+
+            \begin{itemize}
+                \item
+                    Vyzyvatel vygeneruje klíčový pár $(k_p, k_s)$ a $k_p$ pošle protivníkovi $\mathcal{A}$.
+                \item 
+                    Protivník $\mathcal{A}$ vybere zprávy $m_0, m_1 \in \mathcal{M}$, které mají stejnou délku a pošle je vyzyvateli.
+                \item
+                    Vyzyvatel vypočítá $c = E(k_p, m_b)$.
+                    Zašifrovanou zprávu $c$ pošle protivníkovi $\mathcal{A}$.
+                \item
+                    Protivník $\mathcal{A}$ vydá bit $\hat{b} \in {0,1}$.
+            \end{itemize}
+
+            Pro $b = 0, 1$ označme $W_b$ jev, kdy $\mathcal{A}$ vydá 1 v Experimentu $b$.
+            Výhodu sémantického zabezpečení protivníka $\mathcal{A}$ proti $\mathcal{E}$ definujeme jako
+
+            \begin{center}
+                $SSadv[\mathcal{A}, \mathcal{E}] = \left\lvert\Pr[W_0] - \Pr[W_1]\right\rvert$.
+
+                
+            \end{center}
+
+        \end{definition}
+
+        \begin{remark}
+            Jevy $W_0$ a $W_1$ (a jejich pravděpodobnost) jsou jistě ovlivněny náhodným výběrem $k$.
+            Případně také náhodností využité ve funkci zašifrování $E$.
+        \end{remark}
+
+        \begin{definition}[Sémantické zabezpečení]\label{def:semantically-secure-public}
+            Šifra $\mathcal{E}$ je sémanticky bezpečná, pokud pro libovolného výkonného protivníka $\mathcal{A}$
+            je hodnota $SSadv[\mathcal{A}, \mathcal{E}]$ zanedbatelná.
+        \end{definition}
 
 
-        % todo proč je E pravdepodobnostni a D deterministickej
+    \subsection{Deterministické zašifrování}
+        
+        Nyní ukážeme, že pokud by pro šifru $\mathcal{E} = (E, D)$ byl algoritmus zašifrování $E$ deterministický, nebyla by
+        $\mathcal{E}$ sémanticky bezpečná.
+        Ukažme postup protivníka $\mathcal{A}$ s deterministickým algoritmem zašifrování $E$.
+
+        \begin{itemize}
+            \item
+                $\mathcal{A}$ obdrží $k_p$ od vyzyvatele.
+            \item 
+                $\mathcal{A}$ vybere zprávy $m_0, m_1 \in \mathcal{M}$, které mají stejnou délku a pošle je vyzyvateli.
+            \item
+                Vyzyvatel odpoví zašifrovanou zprávou $c$, kterou získá jako $c = E(k_p, m_b)$.
+            \item
+                $\mathcal{A}$ vypočítá $c_0 = E(k_p, m_0)$ a vydá 0 pokud $c = c_0$. Jinak vydá 1.
+        \end{itemize}
+
+        Protože $E$ pracuje deterministicky, $b = 0$ právě tehdy, když $c = c_0$.
+        Dle uvedeného postupu tedy $\mathcal{A}$ vydá 0 právě tehdy, když $b = 0$.
+        Pokud $b = 0$ vydá $\mathcal{A}$ 1.
+
+        Z toho plyne, že $SSadv[\mathcal{A}, \mathcal{E}] = 1$.
+        Tedy dle Definice~\ref{def:semantically-secure-public} není $\mathcal{E}$ sémanticky bezpečná.
+
+
+    Z tohoto důvodu požadujeme, aby algoritmus $E$ byl pravděpodobnostní.
+    Měl by tedy ve svém výpočtu využívat náhodnosti.
+    Nesmí (tak jak by to dělal deterministický algoritmus) pokaždé zprávu $m$ zašifrovat stejným způsobem.
+    
+    To nám zaručí sémantické zabezpečení a tedy menší šanci na prolomení šifry $\mathcal{E}$.
 
 
 \section{Klíčový pár}\label{sec:key-pair}
-
 
     Dvojici klíčů $k_s$ (soukromý klíč) a $k_p$ (veřejný klíč), které zaručují splnění podmínky korektnosti budeme říkat \emph{klíčový pár}.
     \footnote{Indexy $s$ a $p$ jsou z angl. \emph{secret} a \emph{public}.}
@@ -1004,20 +1133,46 @@
     \footnote{Místo názvu \emph{asymetrické šifrování} se často používá
     název \emph{šifrování s veřejným klíčem} (anglicky \emph{public-key cryptography}).}
 
+    Oproti symetrickému šifrování ale Bob vygenerováním svého klíčového páru nezajistí obousměrnou komunikaci.
+    Pokud bude Alice chtít přijímat zprávy od Boba, musí si vygenerovat svůj vlastní klíčový pár.
+    Podobně jako Bob svůj veřejný klíč zveřejní a svůj soukromý klíč uchová v tajnosti.
+
 
     \subsection{Volba klíčového páru}
 
+        Pro klíčový pár $k_p, k_s$ musí platit, že z veřejného klíče $k_p$ nelze získat soukromý klíč $k_s$.
+        Soukromý klíč může samozřejmě Eva uhádnout.
+        Budeme tedy požadovat, aby získání $k_s$ z $k_p$ bylo značně výpočetně náročné.
 
-        % todo podminky pro páry prirozene
-    
-
-\section{Prvočíselnost}\label{sec:primality}
-    % todo motivace asi az na konec jako modularni aritmetika
+        Pokud by tato podmínka neplatila, mohl by zprávy dešifrovat každý.
+        Každý by si totiž mohl z volně přístupného veřejného klíče $k_p$ vypočítat soukromý klíč $k_s$.
 
 
 \section{RSA}\label{sec:RSA}
 
+    % RSA and Public Key... 60 - 66 = RSA
+    % RSA and Public Key... 111 - 127 = security of RSA
+
+    % Graduate Course... 403 RSA
+    % Graduate Course... 696 attacks on RSA
+
+    Nejznámější protokol založený na asymetrickém šifrování je protokol RSA pojmenovaný po jeho autorech.
+    Těmi byli Ronald L. Rivest, Adi Shamir a Leonard Adleman.
+
+
+
+
+
+
     \subsection{Bezpečnost RSA}\label{sub:RSA-security}
+
+
+
+\section{Prvočíselnost}\label{sec:primality}
+
+    % todo motivace asi az na konec jako modularni aritmetika
+
+
 
 
 \section{Digitální podpisy}\label{sec:digital-signatures}

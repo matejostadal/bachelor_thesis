@@ -1,28 +1,32 @@
 \babel@toc {czech}{}\relax 
-\contentsline {part}{I\hspace {1em}Úvod}{7}{part.1}%
-\contentsline {part}{II\hspace {1em}Symetrické šifrování}{8}{part.2}%
-\contentsline {section}{\numberline {1}Caesarova šifra}{9}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Bezpečnost Caesarovy šifry}{10}{subsection.1.1}%
-\contentsline {section}{\numberline {2}Vernamova šifra}{10}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Bezpečnost Vernamovy šifry}{11}{subsection.2.1}%
-\contentsline {section}{\numberline {3}Bezpečnost v teorii a praxi}{11}{section.3}%
-\contentsline {section}{\numberline {4}Modulární aritmetika}{13}{section.4}%
-\contentsline {section}{\numberline {5}Diffieho-Hellmanova výměna klíčů}{14}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Protokol D-H}{15}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Bezpečnost D-H výměny klíčů}{16}{subsection.5.2}%
-\contentsline {section}{\numberline {6}Problém diskrétního logaritmu}{16}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Obtížnost DLP}{17}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}Výpočet diskrétního logaritmu}{17}{subsection.6.2}%
-\contentsline {subsubsection}{\numberline {6.2.1}Hrubá síla}{17}{subsubsection.6.2.1}%
-\contentsline {subsubsection}{\numberline {6.2.2}Rekurzivní algoritmus}{18}{subsubsection.6.2.2}%
-\contentsline {subsubsection}{\numberline {6.2.3}Silver-Pohlig-Hellmanův algoritmus}{18}{subsubsection.6.2.3}%
-\contentsline {subsection}{\numberline {6.3}Kvantové útoky na DLP}{20}{subsection.6.3}%
-\contentsline {section}{\numberline {7}Napadení protokolu D-H trochu jinak}{20}{section.7}%
-\contentsline {part}{III\hspace {1em}Asymetrické šifrování}{22}{part.3}%
-\contentsline {subsection}{\numberline {7.1}Volba algoritmů zašifrování a dešifrování}{22}{subsection.7.1}%
-\contentsline {section}{\numberline {8}Klíčový pár}{22}{section.8}%
-\contentsline {subsection}{\numberline {8.1}Volba klíčového páru}{24}{subsection.8.1}%
-\contentsline {section}{\numberline {9}Prvočíselnost}{24}{section.9}%
-\contentsline {section}{\numberline {10}RSA}{24}{section.10}%
-\contentsline {subsection}{\numberline {10.1}Bezpečnost RSA}{24}{subsection.10.1}%
-\contentsline {section}{\numberline {11}Digitální podpisy}{24}{section.11}%
+\contentsline {part}{I\hspace {1em}Úvod}{8}{part.1}%
+\contentsline {part}{II\hspace {1em}Symetrické šifrování}{9}{part.2}%
+\contentsline {section}{\numberline {1}Caesarova šifra}{10}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Bezpečnost Caesarovy šifry}{11}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Vernamova šifra}{11}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Bezpečnost Vernamovy šifry}{12}{subsection.2.1}%
+\contentsline {section}{\numberline {3}Bezpečnost v teorii a praxi}{12}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Dokonalé zabezpečení}{13}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Sémantické zabezpečení}{14}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Modulární aritmetika}{15}{section.4}%
+\contentsline {section}{\numberline {5}Diffieho-Hellmanova výměna klíčů}{16}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Protokol D-H}{17}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Bezpečnost D-H výměny klíčů}{18}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Problém diskrétního logaritmu}{18}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Obtížnost DLP}{19}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Výpočet diskrétního logaritmu}{19}{subsection.6.2}%
+\contentsline {subsubsection}{\numberline {6.2.1}Hrubá síla}{19}{subsubsection.6.2.1}%
+\contentsline {subsubsection}{\numberline {6.2.2}Rekurzivní algoritmus}{20}{subsubsection.6.2.2}%
+\contentsline {subsubsection}{\numberline {6.2.3}Silver-Pohlig-Hellmanův algoritmus}{20}{subsubsection.6.2.3}%
+\contentsline {subsection}{\numberline {6.3}Kvantové útoky na DLP}{22}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Napadení protokolu D-H trochu jinak}{22}{section.7}%
+\contentsline {part}{III\hspace {1em}Asymetrické šifrování}{24}{part.3}%
+\contentsline {section}{\numberline {8}Volba algoritmu zašifrování}{24}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Sémantické zabezpečení}{25}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Deterministické zašifrování}{25}{subsection.8.2}%
+\contentsline {section}{\numberline {9}Klíčový pár}{26}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Volba klíčového páru}{27}{subsection.9.1}%
+\contentsline {section}{\numberline {10}RSA}{27}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Bezpečnost RSA}{27}{subsection.10.1}%
+\contentsline {section}{\numberline {11}Prvočíselnost}{27}{section.11}%
+\contentsline {section}{\numberline {12}Digitální podpisy}{27}{section.12}%
