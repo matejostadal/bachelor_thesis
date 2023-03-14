@@ -51,7 +51,7 @@
 \part{Úvod}\label{introduction}
 
 
-    % todo inspirace A Graduate Course (projít shodu a parafrázovat)
+    % inspirace A Graduate Course (projít shodu a parafrázovat)
 
     V celé práci budeme hledat různá řešení následujícího problému:
 
@@ -397,9 +397,11 @@
     \subsection{Sémantické zabezpečení}\label{sub:semantic-security-private}
 
         Nižší úrovní zabezpečení, která je ale oproti dokonalému zabezpečení prakticky udržitelná, je \emph{sémantické zabezpečení}.        
-        Uveďme formální definici, která se nejsnáze vede přes tzv. Attack Game.\footnote{[todo attack game]}
+        Formální definici se nejsnáze vede přes tzv. Attack Game.\footnote{Attack Game je častý nástroj využívaný například u důkazů tvrzení.
+        Jedná se o hru dvou hráčů, vyzyvatele a protivníka. Ti se mezi sebou střídají v tazích.
+        Vyzyvatel se svými volbami snaží tvrzení splnit, zatímco protivník se svými volbami snaží dosáhnout opaku.}
 
-        \begin{definition}[Attack Game sémantické bezpečnosti]
+        \begin{definition}[Attack Game sémantické bezpečnosti]\label{def:semantic-security-attack-game}
             
             Nechť $\mathcal{E}  = (E, D)$ je šifra definovaná nad $(\mathcal{K},\mathcal{M},\mathcal{C})$.
             Pro protivníka $\mathcal{A}$ definujeme dva experimenty. Pro $b = 0, 1$ definujeme
@@ -432,7 +434,7 @@
             Případně také náhodností využité ve funkci zašifrování $E$.
         \end{remark}
 
-        \begin{definition}[Sémantické zabezpečení]
+        \begin{definition}[Sémantické zabezpečení]\label{def:semantic-security}
             Šifra $\mathcal{E}$ je sémanticky bezpečná, pokud pro libovolného výkonného protivníka $\mathcal{A}$
             je hodnota $SSadv[\mathcal{A}, \mathcal{E}]$ zanedbatelná.
         \end{definition}
@@ -440,11 +442,11 @@
 
         Pro úplnost bychom měli uvést, co přesně myslíme výrazy \emph{výkonný protivník} a \emph{zanedbatelná}.
         \emph{Výkonný protivník} pro nás bude protivník, který pracuje v rozumném výpočetním čase.
-        \emph{Zanedbatelná} hontota pro nás bude taková hodnota, která lze prakticky považovat za nulu (například hodtota $10^{-1000}$).
+        \emph{Zanedbatelná} hontota pro nás bude taková hodnota, která lze prakticky považovat za nulu (například hodnota $10^{-1000}$).
 
 
         To, že je šifra $\mathcal{E}  = (E, D)$ sémanticky bezpečná tedy zajišťuje, že Eva jako protivník v síti
-        bez znalosti klíče $k$ nerozezná dvě zprávy stejné délky $m_0, m_1$, které byly funkcí $E$ pomocí $k$.
+        bez znalosti klíče $k$ nerozezná dvě zprávy stejné délky $m_0, m_1$, které byly funkcí $E$ (s použitím klíče $k$) zašifrovány.
         Zajišťuje tedy, že šifrovaná zpráva $c$ Evě nedává žádnou informaci o původní zprávě $m$.
 
 
@@ -452,6 +454,8 @@
 
     [Obsah doplním následně dle použitého obsahu, kterému tuto kapitolu přizpůsobím.
     Případně věty rozdělím přímo ke kapitolám, u kterých jsou využity.]
+
+    \bigskip
 
     V této kapitole uvedeme několik definic a vět, které nám pomůžou v dalších pasážích tohoto textu.
     Na některé z nich budeme přímo odkazovat.
@@ -691,8 +695,6 @@
     Na tomto předpokladu stojí bezpečnost řady šifrovacích protokolů, včetně Diffieho-Hellmanovy výměny klíčů
     (jak jsme uvedli v podkapitole~\ref{sub:diffie-hellman-security}).
 
-    % attack game 10.4 A Graduate Course - 407
-
     \begin{definition}[Předpoklad diskrétního logaritmu]\label{def:discrete-log-assumption}
                     
         Předpoklad diskrétního logaritmu platí pro cyklickou grupu $\mathbb{G}$, právě tehdy když
@@ -885,6 +887,8 @@
                 Namísto spuštění D-H protokolu v celé grupě $\mathbb{Z}^*_p$ stačí protokol spustit
                 v podgrupě $\mathbb{G}_{q_{max}}$ řádu $q_{max}$.
             
+                % todo existence takove podgrupy
+
                 Dle Věty~\ref{the:sph-complexity} takovéto omezení bude mít pouze zanedbatelný vliv na bezpečnost protokolu.
 
                 Alici i Bobovi tímto omezením zmenšíme množinu exponentů, ze kterých budou vybírat své tajné klíče.
@@ -956,42 +960,32 @@
         
     Asymetrické šifrování je způsob šifrování, ve kterém je v procesu zašifrování zprávy použit odlišný klíč, než při procesu dešifrování.
 
+    \medskip
+
     Podobně jako v části~\ref{private-key} budeme hledat řešení základního problému uvedeného v části~\ref{introduction}.
     Později navíc představíme systémy, které budou odolné také proti silnějšímu protivníkovi Mallorymu.
 
-    Nejprve uveďme definici asymetrické šifry.
-
     \medskip
 
-    Asymetrická šifra pro nás bude uspořádaná dvojice $\mathcal{E}  = (E, D)$, kde:
+    \noindent
+    Nechť $\mathcal{M}$ je množina všech zpráv a $\mathcal{C}$ je množina všech šifrovaných zpráv.
+    Asymetrická šifra pak bude uspořádaná dvojice $\mathcal{E}  = (E, D)$, kde:
 
     \begin{itemize}
         \item
             $E$ je pravděpodobnostní algoritmus zašifrování.
-            $E$ přijímá na vstupu klíč $k$ a zprávu $m$.
-            Jako výstup vrací zašifrovaný text $c$.
-
-            \begin{center}
-                $E: \mathcal{K} \times \mathcal{M} \rightarrow \mathcal{C}$,
-            \end{center}
-
-            kde $\mathcal{K}$ je množina klíčů, $\mathcal{M}$ je množina zpráv a 
-            $\mathcal{C}$ je množina šifrovaných zpráv.
-
+            $E$ přijímá na vstupu veřejný klíč $k_p$ a zprávu $m \in \mathcal{M}$.
+            Jako výstup vrací zašifrovaný text $c \in \mathcal{C}$.
         \item
-            $D$ je deterministický algoritmus dešifrování. $D$ přijímá na vstupu klíč $k$ a zašifrovaný text $c$.
-            Jako výstup vrací dešifrovanou zprávu $m$.
-            
-            \begin{center}
-                $D: \mathcal{K} \times \mathcal{C} \rightarrow \mathcal{M}$
-            \end{center}
-
+            $D$ je deterministický algoritmus dešifrování. $D$ přijímá na vstupu soukromý klíč $k_s$ a zašifrovaný text $c \in \mathcal{C}$.
+            Jako výstup vrací dešifrovanou zprávu $m \in \mathcal{M}$.
+        
     \end{itemize}
 
-    Každá $\mathcal{E}$ je tedy definována nad $(\mathcal{K},\mathcal{M},\mathcal{C})$.
+    Každá $\mathcal{E}$ je tedy definována nad $(\mathcal{M},\mathcal{C})$.
 
-    Podobně jako u symetrické šifry označme množinu zpráv $\mathcal{M}$, a množinu šifrovaných zpráv $\mathcal{C}$.
-    Každá $\mathcal{E}$ je definována nad $(\mathcal{M},\mathcal{C})$.
+    \medskip
+    \noindent
 
     Stejně jako u symetrického šifrování budeme požadovat, aby byl Bob dešifrováním $c$ schopen získat stejnou zprávu $m$, kterou mu Alice poslala.
     Bude tedy muset platit \emph{podmínka korektnosti}.
@@ -1000,23 +994,81 @@
         $D(k_s, E(k_p, m))=m$
     \end{center}
 
-
     \begin{remark}
         Všimněme si rozdílu oproti podmínce korektnosti u symetrického šifrování.
         Rozdíl přímo vyplývá z definice asymetrického šifrování.
     \end{remark}
 
 
+\section{Klíčový pár}\label{sec:key-pair}
+
+    Dvojici klíčů $k_s$ (soukromý klíč) a $k_p$ (veřejný klíč), které zaručují splnění podmínky korektnosti budeme říkat \emph{klíčový pár}.
+    \footnote{Indexy $s$ a $p$ jsou z angl. \emph{secret} a \emph{public}.}
+
+    Už pojmenování klíčů samotné nám říká, že $k_s$ bude chtít uživatel udržet v tajnosti a $k_p$ bude moct veřejně sdělit.
+
+    \medskip
+
+    Poslání zprávy od Alice Bobovi bude probíhat následovně:
+
+    \begin{itemize}
+        \item
+            Bob vygeneruje svůj klíčový pár $k_s$ a $k_p$.
+            Soukromý klíč si uchová v tajnosti a veřejný klíč nahraje do databáze.\footnote{Nahráním klíče $k_p$ do databáze budeme chápat
+            jeho zveřejnění a zpřístupnění všem uživatelům v síti. Bob by ho mohl případně nahrát na internet, nebo jej Alici poslat přímo po síti.}
+        \item
+            Alice pomocí $k_p$ zašifruje zprávu $m$ na $c=E(k_p, m)$ a získané $c$ pošle po síti Bobovi.
+        \item 
+            Bob s použitím svého soukromého klíče spočítá $D(k_s, c)$ a získá původní zprávu $m$.
+    \end{itemize}
+
+    Jelikož je Bobův veřejný klíč $k_p$ zpřístupněn všem uživatelům v síti, každý uživatel může pomocí něj zašifrovat zprávu a poslat ji Bobovi.
+    Bezpečnost celého systému se potom opírá o fakt, že šifrovaná zpráva lze dešifrovat pouze pomocí soukromého klíče $k_s$.
+    A jelikož si Bob svůj soukromý klíč uchoval v tajnosti, bude šifrované zprávy moct dešifrovat pouze on.
+
+    \begin{remark}
+        Opět si všimněme rozdílu oproti symetrickému šifrování.
+        U něj měl každý, kdo mohl zprávy zašifrovat, možnost zprávy také dešifrovat (stejným klíčem).
+    \end{remark}
+
+    To, že dešifrování zprávy může provést pouze vlastník soukromého klíče $k_s$ nám již poskytuje základní úroveň bezpečnosti.
+    Oproti symetrickému šifrování, nemusela proběhnout žádná domluva mezi Alicí a Bobem.
+    Soukromý klíč (ani žádná informace o něm) přes síť nebyl poslán. Tím přirozeně snižujeme riziko, že jej někdo odhalí.
+
+    Zároveň, pokud bude libovolný jiný uživatel v síti, Carlos, chtít poslat zprávu Bobovi, nebude se s Bobem muset na ničem domlouvat.
+    Pouze použije volně přístupný veřejný klíč $k_p$ k zašifrování zprávy, kterou pošle Bobovi.
+    Carlos bude navíc mít jistotu, že zprávu zpětně dešifruje pouze vlastník soukromého klíče $k_s$, tedy Bob.
+    \footnote{Místo názvu \emph{asymetrické šifrování} se často používá
+    název \emph{šifrování s veřejným klíčem} (anglicky \emph{public-key cryptography}).}
+
+    Oproti symetrickému šifrování ale Bob vygenerováním svého klíčového páru nezajistí obousměrnou komunikaci.
+    Pokud bude Alice chtít přijímat zprávy od Boba, musí si vygenerovat svůj vlastní klíčový pár.
+    Podobně jako Bob potom svůj veřejný klíč nahraje do databáze a svůj soukromý klíč uchová v tajnosti.
+
+
+    \subsection{Volba klíčového páru}
+
+        Pro klíčový pár $k_p, k_s$ musí platit, že z veřejného klíče $k_p$ nelze získat soukromý klíč $k_s$.
+        Pokud by tato podmínka neplatila, mohl by zprávy dešifrovat každý.
+        Kdokoli by si totiž mohl z volně přístupného veřejného klíče $k_p$ vypočítat soukromý klíč $k_s$.
+
+        Soukromý klíč může samozřejmě Eva uhádnout.
+        Budeme tedy požadovat, aby získání $k_s$ z $k_p$ bylo značně výpočetně náročné.
+
+
 % citace 2023... presne semantic security 2 poznamka
 \section{Volba algoritmu zašifrování}
 
     V popisu asymetrické šifry jsme uvedli, že algoritmus zašifrování $E$ musí být pravděpodobnostní.
-    Ukážeme, že v případě, kdy by $E$ byl deterministický, ztratili bychom záruku sémantického zabezpečení pro šifru $\mathcal{E}$.
+    Ukážeme, že v případě, kdy by $E$ byl deterministický, bychom ztratili záruku sémantického zabezpečení pro šifru $\mathcal{E}$.
 
     Abychom mohli problém popsat podrobněji, zadefinujme nejprve sémantické zabezpečení pro asymetrickou šifru.
     Definice se bude v mnohém podobat té v podkapitole~\ref{sub:semantic-security-private}.
 
     \subsection{Sémantické zabezpečení}\label{sub:semantic-security-public}
+
+        Definice sémantického zabezpečení bude stejná jako u symetrického šifrování (viz Definice~\ref{def:semantic-security}).
+        Pouze uvedeme upravenou verzi Attack Game~\ref{def:semantic-security-attack-game} odpovídající asymetrickému šifrování.
 
         \begin{definition}[Attack Game sémantické bezpečnosti]
             
@@ -1044,20 +1096,8 @@
 
             \begin{center}
                 $SSadv[\mathcal{A}, \mathcal{E}] = \left\lvert\Pr[W_0] - \Pr[W_1]\right\rvert$.
-
-                
             \end{center}
 
-        \end{definition}
-
-        \begin{remark}
-            Jevy $W_0$ a $W_1$ (a jejich pravděpodobnost) jsou jistě ovlivněny náhodným výběrem $k$.
-            Případně také náhodností využité ve funkci zašifrování $E$.
-        \end{remark}
-
-        \begin{definition}[Sémantické zabezpečení]\label{def:semantically-secure-public}
-            Šifra $\mathcal{E}$ je sémanticky bezpečná, pokud pro libovolného výkonného protivníka $\mathcal{A}$
-            je hodnota $SSadv[\mathcal{A}, \mathcal{E}]$ zanedbatelná.
         \end{definition}
 
 
@@ -1080,10 +1120,10 @@
 
         Protože $E$ pracuje deterministicky, $b = 0$ právě tehdy, když $c = c_0$.
         Dle uvedeného postupu tedy $\mathcal{A}$ vydá 0 právě tehdy, když $b = 0$.
-        Pokud $b = 0$ vydá $\mathcal{A}$ 1.
+        Pokud $b = 0$ vydá $\mathcal{A}$ výsledek 1.
 
         Z toho plyne, že $SSadv[\mathcal{A}, \mathcal{E}] = 1$.
-        Tedy dle Definice~\ref{def:semantically-secure-public} není $\mathcal{E}$ sémanticky bezpečná.
+        Tedy dle Definice~\ref{def:semantic-security} není $\mathcal{E}$ sémanticky bezpečná.
 
 
     Z tohoto důvodu požadujeme, aby algoritmus $E$ byl pravděpodobnostní.
@@ -1093,68 +1133,12 @@
     To nám zaručí sémantické zabezpečení a tedy menší šanci na prolomení šifry $\mathcal{E}$.
 
 
-\section{Klíčový pár}\label{sec:key-pair}
-
-    Dvojici klíčů $k_s$ (soukromý klíč) a $k_p$ (veřejný klíč), které zaručují splnění podmínky korektnosti budeme říkat \emph{klíčový pár}.
-    \footnote{Indexy $s$ a $p$ jsou z angl. \emph{secret} a \emph{public}.}
-
-    Už pojmenování klíčů samotné nám říká, že $k_s$ bude chtít uživatel udržet v tajnosti a $k_p$ bude moct veřejně sdělit.
-
-    \medskip
-
-    Průběh poslání zprávy by tedy mohl vypadat následovně:
-
-    \begin{itemize}
-        \item
-            Bob vygeneruje svůj klíčový pár $k_s$ a $k_p$.
-            Soukromý klíč si uchová v tajnosti a veřejný klíč nahraje do databáze.\footnote{Nahráním klíče $k_p$ do databáze budeme chápat
-            jeho zveřejnění a zpřístupnění všem uživatelům v síti. Bob by ho mohl případně nahrát na internet, nebo jej Alici poslat přímo po síti.}
-        \item
-            Alice pomocí $k_p$ zašifruje zprávu $m$ na $c=E(k_p, m)$ a $c$ pošle po síti Bobovi.
-        \item 
-            Bob s použitím svého soukromého klíče spočítá $D(k_s, c)$ a získá původní zprávu $m$.
-    \end{itemize}
-
-    Jelikož je Bobův veřejný klíč $k_p$ zpřístupněn všem uživatelům v síti, každý uživatel může pomocí něj zašifrovat zprávu a poslat ji Bobovi.
-    Bezpečnost celého systému se potom opírá o fakt, že šifrovaná zpráva lze dešifrovat pouze pomocí soukromého klíče $k_s$.
-    A jelikož si Bob svůj soukromý klíč uchoval v tajnosti, bude šifrované zprávy moct dešifrovat pouze on.
-
-    \begin{remark}
-        Opět si všimněme rozdílu oproti symetrickému šifrování.
-        U něj měl každý, kdo mohl zprávy zašifrovat, možnost zprávy také dešifrovat (stejným klíčem).
-    \end{remark}
-
-    To, že dešifrování zprávy může provést vlastník soukromého klíče $k_s$ nám již poskytuje základní úroveň bezpečnosti.
-    Oproti symetrickému šifrování, nemusela proběhnout žádná domluva mezi Alicí a Bobem.
-    Soukromý klíč (ani žádná informace o něm) přes síť nebyl poslán. Tím přirozeně snižujeme riziko, že jej někdo odhalí.
-
-    Zároveň, pokud bude libovolný jiný uživatel v síti, Carlos, chtít poslat zprávu Bobovi, nebude se s Bobem muset na ničem domlouvat.
-    Pouze použije volně přístupný veřejný klíč $k_p$ k zašifrování zprávy, kterou pošle Bobovi.
-    Carlos bude nevíc mít jistotu, že zprávu zpětně dešifruje pouze vlastník soukromého klíče $k_s$, tedy Bob.
-    \footnote{Místo názvu \emph{asymetrické šifrování} se často používá
-    název \emph{šifrování s veřejným klíčem} (anglicky \emph{public-key cryptography}).}
-
-    Oproti symetrickému šifrování ale Bob vygenerováním svého klíčového páru nezajistí obousměrnou komunikaci.
-    Pokud bude Alice chtít přijímat zprávy od Boba, musí si vygenerovat svůj vlastní klíčový pár.
-    Podobně jako Bob svůj veřejný klíč nahraje do databáze a svůj soukromý klíč uchová v tajnosti.
-
-
-    \subsection{Volba klíčového páru}
-
-        Pro klíčový pár $k_p, k_s$ musí platit, že z veřejného klíče $k_p$ nelze získat soukromý klíč $k_s$.
-        Soukromý klíč může samozřejmě Eva uhádnout.
-        Budeme tedy požadovat, aby získání $k_s$ z $k_p$ bylo značně výpočetně náročné.
-
-        Pokud by tato podmínka neplatila, mohl by zprávy dešifrovat každý.
-        Každý by si totiž mohl z volně přístupného veřejného klíče $k_p$ vypočítat soukromý klíč $k_s$.
-
-
 \section{Prvočíselnost}\label{sec:primality}
-
-    % todo motivace asi az na konec jako modularni aritmetika
 
     [Obsah doplním následně dle použitého obsahu, kterému tuto kapitolu přizpůsobím.
     Případně věty rozdělím přímo ke kapitolám, u kterých jsou využity.]
+
+    \bigskip
 
     Než se dostaneme ke konkrétním metodám a protokolům využívajících asymetrické šifrování, podíváme se na několik vlastností prvočísel.
     Uvedeme také několik věcí, které s prvočíselností úzce souvisí.
@@ -1184,7 +1168,7 @@
 
     \subsection{Faktorizace}
 
-
+        [TODO]
 
 
 \section{RSA}\label{sec:RSA}
@@ -1256,7 +1240,7 @@
 
     \subsection{Bezpečnost RSA}\label{sub:RSA-security}
 
-
+        % todo padding pro semantic security
 
 
 
